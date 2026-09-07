@@ -54,7 +54,7 @@ void drawScreen() {
 void setup() {
   Serial.begin(115200);
   delay(1500);
-  Serial.println("\nStarting...");
+  Serial.println("\nStarted.");
 
   SPI.begin(EPD_SCK, EPD_MISO, EPD_MOSI, EPD_CS);
   display.init(115200, true, 2, false);
@@ -66,21 +66,18 @@ void setup() {
     display.fillScreen(WHITE);
   } while (display.nextPage());
 
-  Serial.println("Done.");
+  Serial.println("READY");
 }
 
 void loop() {
-  do {
-    display.fillScreen(WHITE);
+  if (Serial.available()) {
+    size_t received = 0;
 
-    display.drawBitmap(
-      0,
-      0,
-      (uint8_t*)screen,
-      SCREEN_WIDTH,
-      SCREEN_HEIGHT,
-      BLACK
-    );
-    
-  } while (display.nextPage());
+    for (int i = 0; i < SCREEN_SIZE / 256; i++) {
+      for (int j = 0; j < 256; j++) {
+        screen[received] = Serial.read();
+      }
+      Serial.write("ACK\n");
+    }
+  }
 }
