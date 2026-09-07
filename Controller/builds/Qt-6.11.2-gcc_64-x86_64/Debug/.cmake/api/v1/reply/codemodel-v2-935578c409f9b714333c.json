@@ -1,0 +1,79 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-Debug-f12016dbd384c24056ea.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "EInkStickyNotes",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "EInkStickyNotes::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-EInkStickyNotes-Debug-11a2de689ba8aae0c652.json",
+					"name" : "EInkStickyNotes",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "EInkStickyNotes_autogen::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-EInkStickyNotes_autogen-Debug-3a60fe769444421a54ca.json",
+					"name" : "EInkStickyNotes_autogen",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "EInkStickyNotes_autogen_timestamp_deps::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-EInkStickyNotes_autogen_timestamp_deps-Debug-674ce89836b5b5082378.json",
+					"name" : "EInkStickyNotes_autogen_timestamp_deps",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/simon/Documents/EInkStickyNotes/EInkStickyNotes/builds/Qt-6.11.2-gcc_64-x86_64/Debug",
+		"source" : "/home/simon/Documents/EInkStickyNotes/EInkStickyNotes"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 6
+	}
+}

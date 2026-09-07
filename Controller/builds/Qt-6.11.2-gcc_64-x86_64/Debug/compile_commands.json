@@ -1,0 +1,20 @@
+[
+{
+  "directory": "/home/simon/Documents/EInkStickyNotes/EInkStickyNotes/builds/Qt-6.11.2-gcc_64-x86_64/Debug",
+  "command": "/usr/bin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -I/home/simon/Documents/EInkStickyNotes/EInkStickyNotes/builds/Qt-6.11.2-gcc_64-x86_64/Debug/EInkStickyNotes_autogen/include -isystem /home/simon/Qt/6.11.2/gcc_64/include/QtCore -isystem /home/simon/Qt/6.11.2/gcc_64/include -isystem /home/simon/Qt/6.11.2/gcc_64/mkspecs/linux-g++ -isystem /home/simon/Qt/6.11.2/gcc_64/include/QtWidgets -isystem /home/simon/Qt/6.11.2/gcc_64/include/QtGui -DQT_QML_DEBUG -DQT_DECLARATIVE_DEBUG -g -std=gnu++17 -fPIC -o CMakeFiles/EInkStickyNotes.dir/EInkStickyNotes_autogen/mocs_compilation.cpp.o -c /home/simon/Documents/EInkStickyNotes/EInkStickyNotes/builds/Qt-6.11.2-gcc_64-x86_64/Debug/EInkStickyNotes_autogen/mocs_compilation.cpp",
+  "file": "/home/simon/Documents/EInkStickyNotes/EInkStickyNotes/builds/Qt-6.11.2-gcc_64-x86_64/Debug/EInkStickyNotes_autogen/mocs_compilation.cpp",
+  "output": "CMakeFiles/EInkStickyNotes.dir/EInkStickyNotes_autogen/mocs_compilation.cpp.o"
+},
+{
+  "directory": "/home/simon/Documents/EInkStickyNotes/EInkStickyNotes/builds/Qt-6.11.2-gcc_64-x86_64/Debug",
+  "command": "/usr/bin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -I/home/simon/Documents/EInkStickyNotes/EInkStickyNotes/builds/Qt-6.11.2-gcc_64-x86_64/Debug/EInkStickyNotes_autogen/include -isystem /home/simon/Qt/6.11.2/gcc_64/include/QtCore -isystem /home/simon/Qt/6.11.2/gcc_64/include -isystem /home/simon/Qt/6.11.2/gcc_64/mkspecs/linux-g++ -isystem /home/simon/Qt/6.11.2/gcc_64/include/QtWidgets -isystem /home/simon/Qt/6.11.2/gcc_64/include/QtGui -DQT_QML_DEBUG -DQT_DECLARATIVE_DEBUG -g -std=gnu++17 -fPIC -o CMakeFiles/EInkStickyNotes.dir/main.cpp.o -c /home/simon/Documents/EInkStickyNotes/EInkStickyNotes/main.cpp",
+  "file": "/home/simon/Documents/EInkStickyNotes/EInkStickyNotes/main.cpp",
+  "output": "CMakeFiles/EInkStickyNotes.dir/main.cpp.o"
+},
+{
+  "directory": "/home/simon/Documents/EInkStickyNotes/EInkStickyNotes/builds/Qt-6.11.2-gcc_64-x86_64/Debug",
+  "command": "/usr/bin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -I/home/simon/Documents/EInkStickyNotes/EInkStickyNotes/builds/Qt-6.11.2-gcc_64-x86_64/Debug/EInkStickyNotes_autogen/include -isystem /home/simon/Qt/6.11.2/gcc_64/include/QtCore -isystem /home/simon/Qt/6.11.2/gcc_64/include -isystem /home/simon/Qt/6.11.2/gcc_64/mkspecs/linux-g++ -isystem /home/simon/Qt/6.11.2/gcc_64/include/QtWidgets -isystem /home/simon/Qt/6.11.2/gcc_64/include/QtGui -DQT_QML_DEBUG -DQT_DECLARATIVE_DEBUG -g -std=gnu++17 -fPIC -o CMakeFiles/EInkStickyNotes.dir/mainwindow.cpp.o -c /home/simon/Documents/EInkStickyNotes/EInkStickyNotes/mainwindow.cpp",
+  "file": "/home/simon/Documents/EInkStickyNotes/EInkStickyNotes/mainwindow.cpp",
+  "output": "CMakeFiles/EInkStickyNotes.dir/mainwindow.cpp.o"
+}
+]

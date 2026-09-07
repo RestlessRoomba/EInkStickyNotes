@@ -1,0 +1,9 @@
+/home/simon/Documents/EInkStickyNotes/EInkStickyNotes/builds/Qt-6.11.2-gcc_64-x86_64/Debug/CMakeFiles/EInkStickyNotes.dir
+/home/simon/Documents/EInkStickyNotes/EInkStickyNotes/builds/Qt-6.11.2-gcc_64-x86_64/Debug/CMakeFiles/edit_cache.dir
+/home/simon/Documents/EInkStickyNotes/EInkStickyNotes/builds/Qt-6.11.2-gcc_64-x86_64/Debug/CMakeFiles/rebuild_cache.dir
+/home/simon/Documents/EInkStickyNotes/EInkStickyNotes/builds/Qt-6.11.2-gcc_64-x86_64/Debug/CMakeFiles/list_install_components.dir
+/home/simon/Documents/EInkStickyNotes/EInkStickyNotes/builds/Qt-6.11.2-gcc_64-x86_64/Debug/CMakeFiles/install.dir
+/home/simon/Documents/EInkStickyNotes/EInkStickyNotes/builds/Qt-6.11.2-gcc_64-x86_64/Debug/CMakeFiles/install/local.dir
+/home/simon/Documents/EInkStickyNotes/EInkStickyNotes/builds/Qt-6.11.2-gcc_64-x86_64/Debug/CMakeFiles/install/strip.dir
+/home/simon/Documents/EInkStickyNotes/EInkStickyNotes/builds/Qt-6.11.2-gcc_64-x86_64/Debug/CMakeFiles/EInkStickyNotes_autogen_timestamp_deps.dir
+/home/simon/Documents/EInkStickyNotes/EInkStickyNotes/builds/Qt-6.11.2-gcc_64-x86_64/Debug/CMakeFiles/EInkStickyNotes_autogen.dir
