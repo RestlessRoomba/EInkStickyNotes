@@ -31,25 +31,15 @@ GxEPD2_BW<GxEPD2_420_GDEY042T81, GxEPD2_420_GDEY042T81::HEIGHT> display(
     GxEPD2_420_GDEY042T81(EPD_CS, EPD_DC, EPD_RST, EPD_BUSY));
 
 
-uint8_t screen[SCREEN_SIZE];
-
-
 // ---------- Functions ----------
-void drawScreen() {
-  display.firstPage();
+void drawScreen(uint8_t* bitmap);
+bool receiveBitmap(uint8_t* bitmap);
+void waitForAck();
+void sendAck();
 
-  do {
-    display.fillScreen(WHITE);
-    display.drawBitmap(
-      0,
-      0,
-      (uint8_t*)screen,
-      SCREEN_WIDTH,
-      SCREEN_HEIGHT,
-      BLACK
-    );
-  } while (display.nextPage());
-}
+
+uint8_t bitmap[SCREEN_SIZE];
+
 
 void setup() {
   Serial.begin(115200);
@@ -65,19 +55,64 @@ void setup() {
   do {
     display.fillScreen(WHITE);
   } while (display.nextPage());
-
-  Serial.println("READY");
 }
 
 void loop() {
-  if (Serial.available()) {
-    size_t received = 0;
+  receiveBitmap(bitmap);
+  drawScreen(bitmap);
+}
 
-    for (int i = 0; i < SCREEN_SIZE / 256; i++) {
-      for (int j = 0; j < 256; j++) {
-        screen[received] = Serial.read();
-      }
-      Serial.write("ACK\n");
+void drawScreen(uint8_t* bitmap) {
+  display.firstPage();
+
+  do {
+    display.fillScreen(WHITE);
+    display.drawBitmap(
+      0,
+      0,
+      bitmap,
+      SCREEN_WIDTH,
+      SCREEN_HEIGHT,
+      BLACK
+    );
+  } while (display.nextPage());
+}
+
+bool receiveBitmap(uint8_t* bitmap) {
+  size_t received = 0;
+  const size_t CHUNK_SIZE = 256;
+
+  while (received < SCREEN_SIZE) {
+    size_t bytesToReceive = min(CHUNK_SIZE, SCREEN_SIZE - received);
+
+    while (Serial.available() < bytesToReceive) {
+      // wait
     }
+
+    for (size_t bytes = 0; bytes < bytesToReceive; bytes++) {
+      bitmap[received++] = Serial.read();
+    }
+    
+    sendAck();
   }
+
+  return true;
+}
+
+void waitForAck() {
+    bool ackReceived = false;
+
+    while (ackReceived == false) {
+        if (Serial.available()) {
+            if (Serial.read() == 'A' &&
+                Serial.read() == 'C' &&
+                Serial.read() == 'K') {
+                    ackReceived = true;
+                }
+        }
+    }
+}
+
+void sendAck() {
+    Serial.write("ACK");
 }
