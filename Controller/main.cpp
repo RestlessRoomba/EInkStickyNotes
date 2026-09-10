@@ -1,6 +1,7 @@
+#include "communication/SerialPort.h"
+
 #include <QApplication>
 #include "mainwindow.h"
-#include <QSerialPort>
 #include <QDebug>
 #include <QThread>
 #include <QElapsedTimer>
@@ -19,8 +20,6 @@ void setPixel(int x, int y, bool value);
 bool getPixel(int x, int y);
 
 
-const QString ESP32_PORT = "/dev/serial/by-id/usb-Espressif_USB_JTAG_serial_debug_unit_94:A9:90:DD:A6:4C-if00";
-QSerialPort Serial;
 uint8_t screen[SCREEN_HEIGHT][BYTES_PER_ROW];
 
 
@@ -35,20 +34,9 @@ int main(int argc, char *argv[]) {
             setPixel(x, y, x % 2);
         }
     }
-    
 
-    // Open Serial
-    Serial.setPortName(ESP32_PORT);
-    Serial.setBaudRate(QSerialPort::Baud115200);
-
-    if (!Serial.open(QIODevice::ReadWrite)) {
-        qDebug() << "Error while opening serial: " << Serial.errorString();
-        return 1;
-    }
-
-    Serial.clear(QSerialPort::AllDirections); // Clear Serial
-
-    qDebug() << "Serial opened.";
+    SerialPort serialPort;
+    serialPort.openSerial();
 
     // Send Bitmap
     sendBitmap(&screen[0][0]);
