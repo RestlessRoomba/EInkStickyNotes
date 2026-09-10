@@ -16,5 +16,11 @@
   "command": "/usr/bin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_SERIALPORT_LIB -DQT_WIDGETS_LIB -I/home/simon/Documents/EInkStickyNotes/EInkStickyNotes/Controller/build/EInkStickyNotes_autogen/include -isystem /home/simon/Qt/6.11.2/gcc_64/include/QtCore -isystem /home/simon/Qt/6.11.2/gcc_64/include -isystem /home/simon/Qt/6.11.2/gcc_64/mkspecs/linux-g++ -isystem /home/simon/Qt/6.11.2/gcc_64/include/QtWidgets -isystem /home/simon/Qt/6.11.2/gcc_64/include/QtGui -isystem /home/simon/Qt/6.11.2/gcc_64/include/QtSerialPort -DQT_QML_DEBUG -DQT_DECLARATIVE_DEBUG -g -std=gnu++17 -fPIC -o CMakeFiles/EInkStickyNotes.dir/mainwindow.cpp.o -c /home/simon/Documents/EInkStickyNotes/EInkStickyNotes/Controller/mainwindow.cpp",
   "file": "/home/simon/Documents/EInkStickyNotes/EInkStickyNotes/Controller/mainwindow.cpp",
   "output": "CMakeFiles/EInkStickyNotes.dir/mainwindow.cpp.o"
+},
+{
+  "directory": "/home/simon/Documents/EInkStickyNotes/EInkStickyNotes/Controller/build",
+  "command": "/usr/bin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_SERIALPORT_LIB -DQT_WIDGETS_LIB -I/home/simon/Documents/EInkStickyNotes/EInkStickyNotes/Controller/build/EInkStickyNotes_autogen/include -isystem /home/simon/Qt/6.11.2/gcc_64/include/QtCore -isystem /home/simon/Qt/6.11.2/gcc_64/include -isystem /home/simon/Qt/6.11.2/gcc_64/mkspecs/linux-g++ -isystem /home/simon/Qt/6.11.2/gcc_64/include/QtWidgets -isystem /home/simon/Qt/6.11.2/gcc_64/include/QtGui -isystem /home/simon/Qt/6.11.2/gcc_64/include/QtSerialPort -DQT_QML_DEBUG -DQT_DECLARATIVE_DEBUG -g -std=gnu++17 -fPIC -o CMakeFiles/EInkStickyNotes.dir/communication/SerialPort.cpp.o -c /home/simon/Documents/EInkStickyNotes/EInkStickyNotes/Controller/communication/SerialPort.cpp",
+  "file": "/home/simon/Documents/EInkStickyNotes/EInkStickyNotes/Controller/communication/SerialPort.cpp",
+  "output": "CMakeFiles/EInkStickyNotes.dir/communication/SerialPort.cpp.o"
 }
 ]
