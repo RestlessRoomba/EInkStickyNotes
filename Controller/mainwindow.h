@@ -1,21 +1,23 @@
-#pragma once
+#ifndef MAINWINDOW_H
+#define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QPushButton>
 
-QT_BEGIN_NAMESPACE
 namespace Ui {
-    class MainWindow;
+  class MainWindow;
 }
-QT_END_NAMESPACE
-
+ 
 class MainWindow : public QMainWindow
 {
-    Q_OBJECT
-
+  Q_OBJECT
 public:
-    explicit MainWindow(QWidget *parent = nullptr);
-    ~MainWindow();
-
+  explicit MainWindow(QWidget *parent = nullptr);
+private slots:
+  void handleButton();
+  void handleClearButton();
 private:
-    Ui::MainWindow *ui;
+  QPushButton *m_button;
+  QPushButton *m_clearButton;
 };
+#endif // MAINWINDOW_H

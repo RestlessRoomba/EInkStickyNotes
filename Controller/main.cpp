@@ -44,15 +44,15 @@ int main(int argc, char *argv[]) {
 
     if (!Serial.open(QIODevice::ReadWrite)) {
         qDebug() << "Error while opening serial: " << Serial.errorString();
-        return 1;
+        printf("Device not connected");
+    } else {
+        Serial.clear(QSerialPort::AllDirections); // Clear Serial
+
+        qDebug() << "Serial opened.";
+
+        // Send Bitmap
+        sendBitmap(&screen[0][0]);
     }
-
-    Serial.clear(QSerialPort::AllDirections); // Clear Serial
-
-    qDebug() << "Serial opened.";
-
-    // Send Bitmap
-    sendBitmap(&screen[0][0]);
 
     return a.exec();
 }
