@@ -1,16 +1,9 @@
 # ninja log v5
-2	21	1788881779620652138	EInkStickyNotes_autogen/timestamp	6fb2ea61205f0681
-2	21	1788881779620652138	/home/simon/Documents/EInkStickyNotes/EInkStickyNotes/Controller/build/EInkStickyNotes_autogen/mocs_compilation.cpp	6fb2ea61205f0681
-2	21	1788881779620652138	EInkStickyNotes_autogen/mocs_compilation.cpp	6fb2ea61205f0681
-1557	1783	1788881781380663453	EInkStickyNotes	ac5eccd5009c58bb
-2	21	1788881779620652138	/home/simon/Documents/EInkStickyNotes/EInkStickyNotes/Controller/build/EInkStickyNotes_autogen/timestamp	6fb2ea61205f0681
-22	1557	1788881781156253531	CMakeFiles/EInkStickyNotes.dir/main.cpp.o	10d427c259a733a6
-1211	2530	1788785334008818557	CMakeFiles/EInkStickyNotes.dir/EInkStickyNotes_autogen/mocs_compilation.cpp.o	1e94af6bbf1f3683
-22	1350	1788881780949833566	CMakeFiles/EInkStickyNotes.dir/mainwindow.cpp.o	e194e659df4fbe8d
 2	21	1788882602314700503	EInkStickyNotes_autogen/timestamp	6fb2ea61205f0681
-2	21	1788882602314700503	EInkStickyNotes_autogen/mocs_compilation.cpp	6fb2ea61205f0681
-2	21	1788882602314700503	/home/simon/Documents/EInkStickyNotes/EInkStickyNotes/Controller/build/EInkStickyNotes_autogen/timestamp	6fb2ea61205f0681
 2	21	1788882602314700503	/home/simon/Documents/EInkStickyNotes/EInkStickyNotes/Controller/build/EInkStickyNotes_autogen/mocs_compilation.cpp	6fb2ea61205f0681
-22	1367	1788882603659770691	CMakeFiles/EInkStickyNotes.dir/mainwindow.cpp.o	e194e659df4fbe8d
-22	1556	1788882603848903303	CMakeFiles/EInkStickyNotes.dir/main.cpp.o	10d427c259a733a6
+2	21	1788882602314700503	EInkStickyNotes_autogen/mocs_compilation.cpp	6fb2ea61205f0681
 1556	1780	1788882604070192543	EInkStickyNotes	ac5eccd5009c58bb
+2	21	1788882602314700503	/home/simon/Documents/EInkStickyNotes/EInkStickyNotes/Controller/build/EInkStickyNotes_autogen/timestamp	6fb2ea61205f0681
+22	1556	1788882603848903303	CMakeFiles/EInkStickyNotes.dir/main.cpp.o	10d427c259a733a6
+1211	2530	1788785334008818557	CMakeFiles/EInkStickyNotes.dir/EInkStickyNotes_autogen/mocs_compilation.cpp.o	1e94af6bbf1f3683
+22	1367	1788882603659770691	CMakeFiles/EInkStickyNotes.dir/mainwindow.cpp.o	e194e659df4fbe8d
