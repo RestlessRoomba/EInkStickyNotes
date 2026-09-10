@@ -1,6 +1,5 @@
 #include <QApplication>
 #include "mainwindow.h"
-#include <iostream>
 #include <QSerialPort>
 #include <QDebug>
 #include <QThread>
