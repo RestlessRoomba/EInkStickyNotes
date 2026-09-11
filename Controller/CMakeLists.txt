@@ -5,15 +5,15 @@ project(EInkStickyNotes VERSION 0.1 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(Qt6 REQUIRED COMPONENTS Widgets SerialPort)
+find_package(Qt6 REQUIRED COMPONENTS Widgets Core SerialPort)
 
 qt_standard_project_setup()
 
 qt_add_executable(EInkStickyNotes
     main.cpp
-    mainwindow.cpp
-    mainwindow.h
-    mainwindow.ui
+    ui/mainwindow.cpp
+    ui/mainwindow.h
+    ui/mainwindow.ui
 
     communication/SerialPort.cpp
     communication/SerialPort.h
@@ -22,6 +22,7 @@ qt_add_executable(EInkStickyNotes
 target_link_libraries(EInkStickyNotes 
     PRIVATE 
         Qt6::Widgets
+        Qt6::Core
         Qt6::SerialPort
         )
 

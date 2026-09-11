@@ -65,13 +65,13 @@ build CMakeFiles/EInkStickyNotes.dir/main.cpp.o: CXX_COMPILER__EInkStickyNotes_u
   OBJECT_DIR = CMakeFiles/EInkStickyNotes.dir
   OBJECT_FILE_DIR = CMakeFiles/EInkStickyNotes.dir
 
-build CMakeFiles/EInkStickyNotes.dir/mainwindow.cpp.o: CXX_COMPILER__EInkStickyNotes_unscanned_Debug /home/simon/Documents/EInkStickyNotes/EInkStickyNotes/Controller/mainwindow.cpp || cmake_object_order_depends_target_EInkStickyNotes
+build CMakeFiles/EInkStickyNotes.dir/ui/mainwindow.cpp.o: CXX_COMPILER__EInkStickyNotes_unscanned_Debug /home/simon/Documents/EInkStickyNotes/EInkStickyNotes/Controller/ui/mainwindow.cpp || cmake_object_order_depends_target_EInkStickyNotes
   DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_SERIALPORT_LIB -DQT_WIDGETS_LIB
-  DEP_FILE = CMakeFiles/EInkStickyNotes.dir/mainwindow.cpp.o.d
+  DEP_FILE = CMakeFiles/EInkStickyNotes.dir/ui/mainwindow.cpp.o.d
   FLAGS = -DQT_QML_DEBUG -DQT_DECLARATIVE_DEBUG -g -std=gnu++17 -fPIC
   INCLUDES = -I/home/simon/Documents/EInkStickyNotes/EInkStickyNotes/Controller/build/EInkStickyNotes_autogen/include -isystem /home/simon/Qt/6.11.2/gcc_64/include/QtCore -isystem /home/simon/Qt/6.11.2/gcc_64/include -isystem /home/simon/Qt/6.11.2/gcc_64/mkspecs/linux-g++ -isystem /home/simon/Qt/6.11.2/gcc_64/include/QtWidgets -isystem /home/simon/Qt/6.11.2/gcc_64/include/QtGui -isystem /home/simon/Qt/6.11.2/gcc_64/include/QtSerialPort
   OBJECT_DIR = CMakeFiles/EInkStickyNotes.dir
-  OBJECT_FILE_DIR = CMakeFiles/EInkStickyNotes.dir
+  OBJECT_FILE_DIR = CMakeFiles/EInkStickyNotes.dir/ui
 
 build CMakeFiles/EInkStickyNotes.dir/communication/SerialPort.cpp.o: CXX_COMPILER__EInkStickyNotes_unscanned_Debug /home/simon/Documents/EInkStickyNotes/EInkStickyNotes/Controller/communication/SerialPort.cpp || cmake_object_order_depends_target_EInkStickyNotes
   DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_SERIALPORT_LIB -DQT_WIDGETS_LIB
@@ -89,7 +89,7 @@ build CMakeFiles/EInkStickyNotes.dir/communication/SerialPort.cpp.o: CXX_COMPILE
 #############################################
 # Link the executable EInkStickyNotes
 
-build EInkStickyNotes: CXX_EXECUTABLE_LINKER__EInkStickyNotes_Debug CMakeFiles/EInkStickyNotes.dir/EInkStickyNotes_autogen/mocs_compilation.cpp.o CMakeFiles/EInkStickyNotes.dir/main.cpp.o CMakeFiles/EInkStickyNotes.dir/mainwindow.cpp.o CMakeFiles/EInkStickyNotes.dir/communication/SerialPort.cpp.o | /home/simon/Qt/6.11.2/gcc_64/lib/libQt6Widgets.so.6.11.2 /home/simon/Qt/6.11.2/gcc_64/lib/libQt6SerialPort.so.6.11.2 /home/simon/Qt/6.11.2/gcc_64/lib/libQt6Gui.so.6.11.2 /usr/lib/x86_64-linux-gnu/libGLX.so /usr/lib/x86_64-linux-gnu/libOpenGL.so /home/simon/Qt/6.11.2/gcc_64/lib/libQt6Core.so.6.11.2 || EInkStickyNotes_autogen EInkStickyNotes_autogen_timestamp_deps
+build EInkStickyNotes: CXX_EXECUTABLE_LINKER__EInkStickyNotes_Debug CMakeFiles/EInkStickyNotes.dir/EInkStickyNotes_autogen/mocs_compilation.cpp.o CMakeFiles/EInkStickyNotes.dir/main.cpp.o CMakeFiles/EInkStickyNotes.dir/ui/mainwindow.cpp.o CMakeFiles/EInkStickyNotes.dir/communication/SerialPort.cpp.o | /home/simon/Qt/6.11.2/gcc_64/lib/libQt6Widgets.so.6.11.2 /home/simon/Qt/6.11.2/gcc_64/lib/libQt6SerialPort.so.6.11.2 /home/simon/Qt/6.11.2/gcc_64/lib/libQt6Gui.so.6.11.2 /usr/lib/x86_64-linux-gnu/libGLX.so /usr/lib/x86_64-linux-gnu/libOpenGL.so /home/simon/Qt/6.11.2/gcc_64/lib/libQt6Core.so.6.11.2 || EInkStickyNotes_autogen EInkStickyNotes_autogen_timestamp_deps
   FLAGS = -DQT_QML_DEBUG -DQT_DECLARATIVE_DEBUG -g
   LINK_LIBRARIES = -Wl,-rpath,/home/simon/Qt/6.11.2/gcc_64/lib:  /home/simon/Qt/6.11.2/gcc_64/lib/libQt6Widgets.so.6.11.2  /home/simon/Qt/6.11.2/gcc_64/lib/libQt6SerialPort.so.6.11.2  /home/simon/Qt/6.11.2/gcc_64/lib/libQt6Gui.so.6.11.2  /usr/lib/x86_64-linux-gnu/libGLX.so  /usr/lib/x86_64-linux-gnu/libOpenGL.so  /home/simon/Qt/6.11.2/gcc_64/lib/libQt6Core.so.6.11.2  -Wl,-rpath-link,/home/simon/Qt/6.11.2/gcc_64/lib
   OBJECT_DIR = CMakeFiles/EInkStickyNotes.dir
@@ -173,7 +173,7 @@ build EInkStickyNotes_autogen_timestamp_deps: phony CMakeFiles/EInkStickyNotes_a
 #############################################
 # Utility command for EInkStickyNotes_autogen
 
-build EInkStickyNotes_autogen: phony CMakeFiles/EInkStickyNotes_autogen EInkStickyNotes_autogen/include/ui_mainwindow.h EInkStickyNotes_autogen/timestamp EInkStickyNotes_autogen/mocs_compilation.cpp EInkStickyNotes_autogen_timestamp_deps
+build EInkStickyNotes_autogen: phony CMakeFiles/EInkStickyNotes_autogen EInkStickyNotes_autogen/include/ui/ui_mainwindow.h EInkStickyNotes_autogen/timestamp EInkStickyNotes_autogen/mocs_compilation.cpp EInkStickyNotes_autogen_timestamp_deps
 
 
 #############################################
@@ -189,13 +189,13 @@ build EInkStickyNotes_autogen/timestamp EInkStickyNotes_autogen/mocs_compilation
 #############################################
 # Phony custom command for CMakeFiles/EInkStickyNotes_autogen_timestamp_deps
 
-build CMakeFiles/EInkStickyNotes_autogen_timestamp_deps | ${cmake_ninja_workdir}CMakeFiles/EInkStickyNotes_autogen_timestamp_deps: phony /home/simon/Qt/6.11.2/gcc_64/lib/libQt6SerialPort.so.6.11.2 /home/simon/Qt/6.11.2/gcc_64/lib/libQt6Widgets.so.6.11.2 /home/simon/Qt/6.11.2/gcc_64/libexec/moc /home/simon/Qt/6.11.2/gcc_64/libexec/uic /home/simon/Qt/6.11.2/gcc_64/lib/libQt6Core.so.6.11.2
+build CMakeFiles/EInkStickyNotes_autogen_timestamp_deps | ${cmake_ninja_workdir}CMakeFiles/EInkStickyNotes_autogen_timestamp_deps: phony /home/simon/Qt/6.11.2/gcc_64/lib/libQt6SerialPort.so.6.11.2 /home/simon/Qt/6.11.2/gcc_64/libexec/uic /home/simon/Qt/6.11.2/gcc_64/libexec/moc /home/simon/Qt/6.11.2/gcc_64/lib/libQt6Widgets.so.6.11.2
 
 
 #############################################
 # Phony custom command for CMakeFiles/EInkStickyNotes_autogen
 
-build CMakeFiles/EInkStickyNotes_autogen EInkStickyNotes_autogen/include/ui_mainwindow.h | ${cmake_ninja_workdir}CMakeFiles/EInkStickyNotes_autogen ${cmake_ninja_workdir}EInkStickyNotes_autogen/include/ui_mainwindow.h: phony EInkStickyNotes_autogen/timestamp || EInkStickyNotes_autogen_timestamp_deps
+build CMakeFiles/EInkStickyNotes_autogen EInkStickyNotes_autogen/include/ui/ui_mainwindow.h | ${cmake_ninja_workdir}CMakeFiles/EInkStickyNotes_autogen ${cmake_ninja_workdir}EInkStickyNotes_autogen/include/ui/ui_mainwindow.h: phony EInkStickyNotes_autogen/timestamp || EInkStickyNotes_autogen_timestamp_deps
 
 # =============================================================================
 # Target aliases.

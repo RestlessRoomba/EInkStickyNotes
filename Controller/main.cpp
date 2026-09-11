@@ -1,7 +1,7 @@
 #include "communication/SerialPort.h"
+#include "ui/mainwindow.h"
 
 #include <QApplication>
-#include "mainwindow.h"
 #include <QDebug>
 #include <QThread>
 #include <QElapsedTimer>
@@ -51,7 +51,7 @@ void sendBitmap(uint8_t* bitmap) {
 
     for (int bytesSent = 0; bytesSent < DATA_SIZE; bytesSent += CHUNK_SIZE) {
         int bytesToSend = std::min(CHUNK_SIZE, DATA_SIZE - bytesSent);
-        Serial.write(data + bytesSent, bytesToSend);
+        serialPort.write(data + bytesSent, bytesToSend);
         waitForAck();
     }
 }

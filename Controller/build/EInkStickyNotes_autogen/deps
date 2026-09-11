@@ -3,9 +3,11 @@ EInkStickyNotes_autogen/timestamp: \
 	/home/simon/Documents/EInkStickyNotes/EInkStickyNotes/Controller/build/CMakeFiles/3.28.3/CMakeCXXCompiler.cmake \
 	/home/simon/Documents/EInkStickyNotes/EInkStickyNotes/Controller/build/CMakeFiles/3.28.3/CMakeSystem.cmake \
 	/home/simon/Documents/EInkStickyNotes/EInkStickyNotes/Controller/build/EInkStickyNotes_autogen/moc_predefs.h \
+	/home/simon/Documents/EInkStickyNotes/EInkStickyNotes/Controller/communication/SerialPort.cpp \
+	/home/simon/Documents/EInkStickyNotes/EInkStickyNotes/Controller/communication/SerialPort.h \
 	/home/simon/Documents/EInkStickyNotes/EInkStickyNotes/Controller/main.cpp \
-	/home/simon/Documents/EInkStickyNotes/EInkStickyNotes/Controller/mainwindow.cpp \
-	/home/simon/Documents/EInkStickyNotes/EInkStickyNotes/Controller/mainwindow.h \
+	/home/simon/Documents/EInkStickyNotes/EInkStickyNotes/Controller/ui/mainwindow.cpp \
+	/home/simon/Documents/EInkStickyNotes/EInkStickyNotes/Controller/ui/mainwindow.h \
 	/home/simon/Qt/6.11.2/gcc_64/include/QtCore/q17memory.h \
 	/home/simon/Qt/6.11.2/gcc_64/include/QtCore/q20bit.h \
 	/home/simon/Qt/6.11.2/gcc_64/include/QtCore/q20functional.h \
@@ -160,7 +162,10 @@ EInkStickyNotes_autogen/timestamp: \
 	/home/simon/Qt/6.11.2/gcc_64/include/QtGui/qtransform.h \
 	/home/simon/Qt/6.11.2/gcc_64/include/QtGui/qwindowdefs.h \
 	/home/simon/Qt/6.11.2/gcc_64/include/QtWidgets/QMainWindow \
+	/home/simon/Qt/6.11.2/gcc_64/include/QtWidgets/QPushButton \
+	/home/simon/Qt/6.11.2/gcc_64/include/QtWidgets/qabstractbutton.h \
 	/home/simon/Qt/6.11.2/gcc_64/include/QtWidgets/qmainwindow.h \
+	/home/simon/Qt/6.11.2/gcc_64/include/QtWidgets/qpushbutton.h \
 	/home/simon/Qt/6.11.2/gcc_64/include/QtWidgets/qsizepolicy.h \
 	/home/simon/Qt/6.11.2/gcc_64/include/QtWidgets/qtabwidget.h \
 	/home/simon/Qt/6.11.2/gcc_64/include/QtWidgets/qtwidgets-config.h \
@@ -842,5 +847,4 @@ EInkStickyNotes_autogen/timestamp: \
 	/usr/share/cmake-3.28/Modules/Platform/Linux-Initialize.cmake \
 	/usr/share/cmake-3.28/Modules/Platform/Linux.cmake \
 	/usr/share/cmake-3.28/Modules/Platform/UnixPaths.cmake \
-	/home/simon/Documents/EInkStickyNotes/EInkStickyNotes/Controller/mainwindow.ui \
 	/usr/bin/cmake

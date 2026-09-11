@@ -531,9 +531,9 @@
 			null
 		],
 		[
-			"/home/simon/Documents/EInkStickyNotes/EInkStickyNotes/Controller/mainwindow.h",
+			"/home/simon/Documents/EInkStickyNotes/EInkStickyNotes/Controller/ui/mainwindow.h",
 			"MU",
-			"EWIEGA46WW/moc_mainwindow.cpp",
+			"UYX5XTB5RZ/moc_mainwindow.cpp",
 			null
 		]
 	],
@@ -608,7 +608,7 @@
 			null
 		],
 		[
-			"/home/simon/Documents/EInkStickyNotes/EInkStickyNotes/Controller/mainwindow.cpp",
+			"/home/simon/Documents/EInkStickyNotes/EInkStickyNotes/Controller/ui/mainwindow.cpp",
 			"MU",
 			null
 		]
