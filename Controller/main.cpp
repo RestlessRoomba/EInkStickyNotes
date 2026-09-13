@@ -20,21 +20,22 @@ int main(int argc, char *argv[])
     MainWindow w;
     w.show();
 
-    // Open a Serial Port
-    SerialPort serialPort;
-
-    if (!serialPort.openSerial())
-    {
-        qDebug() << "Error while opening serial port.";
-        return 1;
-    }
-
     return a.exec();
 }
 
 int sendBitmap() 
 {
     // --- Send a Bitmap via CommunicationManager ---
+    // Open a Serial Port
+    SerialPort serialPort;
+
+    if (!serialPort.openSerial())
+    {
+        qDebug() << "Error while opening serial port.";
+
+        return 1;
+    }
+
     // Create a Communication Manager on that Serial Port
     CommunicationManager communication(serialPort);
 
@@ -80,6 +81,7 @@ int clearScreen()
     if (!communication.sendBitmap(bitmap))
     {
         qDebug() << "Error while sending bitmap.";
+
         return 1;
     }
 
