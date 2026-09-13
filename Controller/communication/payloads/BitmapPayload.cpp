@@ -1,21 +1,21 @@
 #include "BitmapPayload.h"
 
 
-BitmapPayload::BitmapPayload(const QByteArray& bitmap) : m_bitmap(bitmap)
+BitmapPayload::BitmapPayload(const std::vector<std::uint8_t>& bitmap) : m_bitmap(bitmap)
 {
 }
 
-QByteArray BitmapPayload::serialize() const
+std::vector<std::uint8_t> BitmapPayload::serialize() const
 {
     return m_bitmap;
 }
 
-BitmapPayload BitmapPayload::deserialize(const QByteArray& data)
+BitmapPayload BitmapPayload::deserialize(const std::vector<std::uint8_t>& data)
 {
     return BitmapPayload(data);
 }
 
-QByteArray BitmapPayload::bitmap() const
+const std::vector<std::uint8_t> BitmapPayload::bitmap() const
 {
     return m_bitmap;
 }

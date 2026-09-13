@@ -1,7 +1,9 @@
 #pragma once
 
+#include <cstdint>
+#include <vector>
+
 #include <QSerialPort>
-#include <QByteArray>
 
 
 class SerialPort
@@ -10,7 +12,7 @@ class SerialPort
         SerialPort();
 
         bool openSerial();
-        bool sendData(const QByteArray& data);
+        bool sendData(const std::vector<std::uint8_t>& data);
 
     private:
         bool waitForAck();

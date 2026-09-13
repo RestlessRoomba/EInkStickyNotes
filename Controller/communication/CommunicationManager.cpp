@@ -3,20 +3,15 @@
 #include "payloads/BitmapPayload.h"
 
 
-CommunicationManager::CommunicationManager()
+CommunicationManager::CommunicationManager(SerialPort& SerialPort) : m_serialPort(SerialPort)
 {
 }
 
-bool CommunicationManager::open()
-{
-    return m_serialPort.openSerial();
-}
-
-bool CommunicationManager::sendBitmap(const QByteArray& bitmap)
+bool CommunicationManager::sendBitmap(const std::vector<std::uint8_t>& bitmap)
 {
     BitmapPayload payload(bitmap);
     Packet packet(MessageType::Bitmap, payload.serialize());
-    QByteArray data = packet.serialize();
+    std::vector<std::uint8_t> data = packet.serialize();
 
     return m_serialPort.sendData(data);
 }

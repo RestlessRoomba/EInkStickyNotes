@@ -2,18 +2,17 @@
 
 #include "SerialPort.h"
 
-#include <QByteArray>
+#include <cstdint>
+#include <vector>
 
 
 class CommunicationManager
 {
     public:
-        CommunicationManager();
-
-        bool open();
+        explicit CommunicationManager(SerialPort& serialPort);
         
-        bool sendBitmap(const QByteArray& bitmap);
+        bool sendBitmap(const std::vector<std::uint8_t>& bitmap);
 
     private:
-        SerialPort m_serialPort;
+        SerialPort& m_serialPort;
 };
