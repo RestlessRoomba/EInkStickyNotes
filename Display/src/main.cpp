@@ -1,3 +1,10 @@
+#include "communication/SerialPort.h"
+#include "communication/Packet.h"
+#include "communication/MessageType.h"
+#include "communication/payloads/BitmapPayload.h"
+
+#include <vector>
+
 #include <Arduino.h>
 #include <SPI.h>
 #include <GxEPD2_BW.h>
@@ -27,24 +34,19 @@
 
 
 // ---------- Display-Driver (V2) ----------
-GxEPD2_BW<GxEPD2_420_GDEY042T81, GxEPD2_420_GDEY042T81::HEIGHT> display(
-    GxEPD2_420_GDEY042T81(EPD_CS, EPD_DC, EPD_RST, EPD_BUSY));
+GxEPD2_BW<GxEPD2_420_GDEY042T81, GxEPD2_420_GDEY042T81::HEIGHT> display(GxEPD2_420_GDEY042T81(EPD_CS, EPD_DC, EPD_RST, EPD_BUSY));
 
 
-// ---------- Functions ----------
-void drawScreen(uint8_t* bitmap);
-bool receiveBitmap(uint8_t* bitmap);
-void waitForAck();
-void sendAck();
+// ---------- Code ----------
+
+SerialPort serialPort;
+
+void drawScreen(const std::vector<std::uint8_t>& bitmap);
 
 
-uint8_t bitmap[SCREEN_SIZE];
-
-
-void setup() {
-  Serial.begin(115200);
-  delay(1500);
-  Serial.println("\nStarted.");
+void setup()
+{
+  serialPort.openSerial();
 
   SPI.begin(EPD_SCK, EPD_MISO, EPD_MOSI, EPD_CS);
   display.init(115200, true, 2, false);
@@ -57,12 +59,34 @@ void setup() {
   } while (display.nextPage());
 }
 
-void loop() {
-  receiveBitmap(bitmap);
-  drawScreen(bitmap);
+void loop()
+{
+  std::vector<uint8_t> data;
+
+  if (!serialPort.receiveData(data))
+  {
+    return;
+  }
+
+  Packet packet = Packet::deserialize(data);
+
+  if (packet.type() != MessageType::Bitmap)
+  {
+    return;
+  }
+
+  BitmapPayload payload = BitmapPayload::deserialize(packet.payload());
+
+  drawScreen(payload.bitmap());
 }
 
-void drawScreen(uint8_t* bitmap) {
+void drawScreen(const std::vector<std::uint8_t>& bitmap)
+{
+  if (bitmap.size() != SCREEN_SIZE)
+  {
+    return;
+  }
+
   display.firstPage();
 
   do {
@@ -70,49 +94,10 @@ void drawScreen(uint8_t* bitmap) {
     display.drawBitmap(
       0,
       0,
-      bitmap,
+      bitmap.data(),
       SCREEN_WIDTH,
       SCREEN_HEIGHT,
       BLACK
     );
   } while (display.nextPage());
-}
-
-bool receiveBitmap(uint8_t* bitmap) {
-  size_t received = 0;
-  const size_t CHUNK_SIZE = 256;
-
-  while (received < SCREEN_SIZE) {
-    size_t bytesToReceive = min(CHUNK_SIZE, SCREEN_SIZE - received);
-
-    while (Serial.available() < bytesToReceive) {
-      // wait
-    }
-
-    for (size_t bytes = 0; bytes < bytesToReceive; bytes++) {
-      bitmap[received++] = Serial.read();
-    }
-    
-    sendAck();
-  }
-
-  return true;
-}
-
-void waitForAck() {
-    bool ackReceived = false;
-
-    while (ackReceived == false) {
-        if (Serial.available()) {
-            if (Serial.read() == 'A' &&
-                Serial.read() == 'C' &&
-                Serial.read() == 'K') {
-                    ackReceived = true;
-                }
-        }
-    }
-}
-
-void sendAck() {
-    Serial.write("ACK");
 }
