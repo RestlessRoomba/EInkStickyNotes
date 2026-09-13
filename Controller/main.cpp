@@ -20,25 +20,6 @@ int main(int argc, char *argv[])
     MainWindow w;
     w.show();
 
-    fillBitmap();
-
-    sendBitmap();
-
-    return a.exec();
-}
-
-void fillBitmap() 
-{
-    for (int y = 0; y < SCREEN_HEIGHT; y++) {
-        for (int x = 0; x < SCREEN_WIDTH; x++) {
-            setPixel(x, y, x % 2);
-        }
-    }
-}
-
-int sendBitmap() 
-{
-    // --- Send a Bitmap via CommunicationManager ---
     // Open a Serial Port
     SerialPort serialPort;
 
@@ -48,6 +29,12 @@ int sendBitmap()
         return 1;
     }
 
+    return a.exec();
+}
+
+int sendBitmap() 
+{
+    // --- Send a Bitmap via CommunicationManager ---
     // Create a Communication Manager on that Serial Port
     CommunicationManager communication(serialPort);
 
@@ -78,15 +65,17 @@ int clearScreen()
         }
     }
 
-    CommunicationManager communication;
-    if (!communication.open())
-    {
-        qDebug() << "Error while opening serial port.";
-        return 1;
-    }
+    CommunicationManager communication(serialPort);
 
-    // Type conversion (uint8_t 2D Array into QByteArray)
-    QByteArray bitmap(reinterpret_cast<const char*>(&screen[0][0]), SCREEN_HEIGHT * BYTES_PER_ROW);
+    // Type conversion (uint8_t 2D Array into std::vector<std::uint8_t>)
+    std::vector<std::uint8_t> bitmap;
+    bitmap.reserve(SCREEN_SIZE);
+
+    for (int y = 0; y < SCREEN_HEIGHT; ++y) {
+        for (int x = 0; x < BYTES_PER_ROW; ++x) {
+            bitmap.push_back(screen[y][x]);
+        }
+    }
 
     if (!communication.sendBitmap(bitmap))
     {

@@ -132,3 +132,4 @@ Controller/build/cmake_install.cmake
 Controller/build/cmake_install.cmake
 Controller/build/CMakeCache.txt
 Controller/build/compile_commands.json
+Controller/.vscode/c_cpp_properties.json
