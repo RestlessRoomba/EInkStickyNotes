@@ -66,6 +66,16 @@ int clearScreen()
         }
     }
 
+    // Open a Serial Port
+    SerialPort serialPort;
+
+    if (!serialPort.openSerial())
+    {
+        qDebug() << "Error while opening serial port.";
+
+        return 1;
+    }
+
     CommunicationManager communication(serialPort);
 
     // Type conversion (uint8_t 2D Array into std::vector<std::uint8_t>)
