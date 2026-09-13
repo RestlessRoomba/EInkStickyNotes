@@ -189,7 +189,7 @@ build EInkStickyNotes_autogen/timestamp EInkStickyNotes_autogen/mocs_compilation
 #############################################
 # Phony custom command for CMakeFiles/EInkStickyNotes_autogen_timestamp_deps
 
-build CMakeFiles/EInkStickyNotes_autogen_timestamp_deps | ${cmake_ninja_workdir}CMakeFiles/EInkStickyNotes_autogen_timestamp_deps: phony /home/simon/Qt/6.11.2/gcc_64/libexec/uic /home/simon/Qt/6.11.2/gcc_64/lib/libQt6Widgets.so.6.11.2 /home/simon/Qt/6.11.2/gcc_64/libexec/moc /home/simon/Qt/6.11.2/gcc_64/lib/libQt6SerialPort.so.6.11.2
+build CMakeFiles/EInkStickyNotes_autogen_timestamp_deps | ${cmake_ninja_workdir}CMakeFiles/EInkStickyNotes_autogen_timestamp_deps: phony /home/simon/Qt/6.11.2/gcc_64/lib/libQt6SerialPort.so.6.11.2 /home/simon/Qt/6.11.2/gcc_64/libexec/moc /home/simon/Qt/6.11.2/gcc_64/libexec/uic /home/simon/Qt/6.11.2/gcc_64/lib/libQt6Widgets.so.6.11.2
 
 
 #############################################

@@ -1,4 +1,4 @@
-#include "communication/SerialPort.h"
+#include "communication/CommunicationManager.h"
 #include "ui/mainwindow.h"
 
 #include <QApplication>
@@ -13,9 +13,6 @@
 #define BYTES_PER_ROW (SCREEN_WIDTH / 8)
 
 
-void sendBitmap(uint8_t* bitmap);
-void waitForAck();
-void sendAck();
 void setPixel(int x, int y, bool value);
 bool getPixel(int x, int y);
 
@@ -35,39 +32,25 @@ int main(int argc, char *argv[]) {
         }
     }
 
-    // SerialPort serialPort;
-    // serialPort.openSerial();
+    // --- Send a Bitmap via CommunicationManager ---
+    CommunicationManager communication;
 
-    // Send Bitmap
-    // sendBitmap(&screen[0][0]);
+    if (!communication.open())
+    {
+        qDebug() << "Error while opening serial port.";
+        return 1;
+    }
+
+    // Type conversion (uint8_t 2D Array into QByteArray)
+    QByteArray bitmap(reinterpret_cast<const char*>(&screen[0][0]), SCREEN_HEIGHT * BYTES_PER_ROW);
+
+    if (!communication.sendBitmap(bitmap))
+    {
+        qDebug() << "Error while sending bitmap.";
+        return 1;
+    }
 
     return a.exec();
-}
-
-void sendBitmap(uint8_t* bitmap) {
-    const char* data = reinterpret_cast<const char*>(bitmap);
-    const int DATA_SIZE = SCREEN_HEIGHT * BYTES_PER_ROW;
-    const int CHUNK_SIZE = 256;
-
-    for (int bytesSent = 0; bytesSent < DATA_SIZE; bytesSent += CHUNK_SIZE) {
-        int bytesToSend = std::min(CHUNK_SIZE, DATA_SIZE - bytesSent);
-        // serialPort.write(data + bytesSent, bytesToSend);
-        waitForAck();
-    }
-}
-
-void waitForAck() {
-    QByteArray ack;
-
-    while (ack.size() < 3) {
-        //if (Serial.waitForReadyRead()) {
-            // ack += Serial.readAll();
-        //}
-    }
-
-    if (ack.left(3) == "ACK") {
-        return;
-    }
 }
 
 void sendAck() {
