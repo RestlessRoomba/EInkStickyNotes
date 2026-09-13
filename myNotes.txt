@@ -1,0 +1,6 @@
+- future plans: Class DisplayModule -> for each Display module, create an object with attributes moduleID, ...
+- Communicationmanager Class: manages all communication, provides sendBitmap(); sendError(), ...; builds payload, packet, sends data via SerialPort
+- Payload Types: Class BitmapPayload: defines internal structure of a BitmapMessage-Payload (Byte-Fields for moduleID, ...); serializing Payload-Objects (e.b. BitmapPayload) into QByteArray and backwards
+- MessageTypes - Header file: defines "Bitmap" as 0x01 e.g.; abstraction
+- Packet Class: defines the structure of a packet (byte fieds for Magic, type, payloadSize, payload, ...); serializing Packets into QByteArray and backwards
+- SerialPort Class: functions for opening a serialPort, sendData to serialPort; accepts serialized (QByteArray) data
