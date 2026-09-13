@@ -1,18 +1,19 @@
 #pragma once
 
-#include <QByteArray>
+#include <cstdint>
+#include <vector>
 
 
 class BitmapPayload
 {
     public:
-        BitmapPayload(const QByteArray& bitmap);
+        BitmapPayload(const std::vector<std::uint8_t>& bitmap);
 
-        QByteArray serialize() const;
-        static BitmapPayload deserialize(const QByteArray& data);
+        std::vector<std::uint8_t> serialize() const;
+        static BitmapPayload deserialize(const std::vector<std::uint8_t>& data);
 
-        QByteArray bitmap() const;
+        const std::vector<std::uint8_t> bitmap() const;
 
     private:
-        QByteArray m_bitmap;
+        std::vector<std::uint8_t> m_bitmap;
 };

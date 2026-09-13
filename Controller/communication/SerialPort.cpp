@@ -26,35 +26,38 @@ bool SerialPort::openSerial()
     return true;
 }
 
-bool SerialPort::sendData(const QByteArray& data)
+bool SerialPort::sendData(const std::vector<std::uint8_t>& data)
 {
-    constexpr qsizetype CHUNK_SIZE = 256;
+    constexpr std::size_t CHUNK_SIZE = 256;
 
-    for (int bytes = 0; bytes < data.size(); bytes += CHUNK_SIZE)
+    for (std::size_t bytes = 0; bytes < data.size(); bytes += CHUNK_SIZE)
     {
-        int bytesToSend = std::min(CHUNK_SIZE, data.size() - bytes);
-        QByteArray chunk = data.mid(bytes, bytesToSend);
+        std::size_t bytesToSend = std::min(CHUNK_SIZE, data.size() - bytes);
         qDebug() << "Sending" << bytesToSend << "bytes at offset" << bytes;
-        qint64 written = m_serial.write(chunk);
+        qint64 written = m_serial.write(reinterpret_cast<const char*>(data.data() + bytes), static_cast<qint64>(bytesToSend));
 
-        if (written != bytesToSend)
+        if (written != static_cast<qint64>(bytesToSend))
         {
             qDebug() << "Error: Not all bytes were accepted by QSerialPort.";
+
             return false;
         }
 
         if (!m_serial.waitForBytesWritten(1000))
         {
             qDebug() << "Error while writing to serial: " << m_serial.errorString();
+
             return false;
         }
 
         if (!waitForAck())
         {
             qDebug() << "Error: No valid ACK received.";
+
             return false;
         }
     }
+    
     return true;
 }
 
