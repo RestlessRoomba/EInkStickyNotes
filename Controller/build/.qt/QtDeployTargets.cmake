@@ -1,2 +1,0 @@
-set(__QT_DEPLOY_TARGET_EInkStickyNotes_FILE /home/simon/Documents/EInkStickyNotes/EInkStickyNotes/Controller/build/EInkStickyNotes)
-set(__QT_DEPLOY_TARGET_EInkStickyNotes_TYPE EXECUTABLE)
