@@ -1,3 +1,4 @@
+#include "communication/CommunicationManager.h"
 #include "mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent)
@@ -18,17 +19,10 @@ MainWindow::MainWindow(QWidget *parent)
  
 void MainWindow::handleButton()
 {
-  sendBitmap(&::screen[0][0]);
+  ::sendBitmap();
 }
 
 void MainWindow::handleClearButton()
 {
-  // Clear the screen
-  for (int y = 0; y < SCREEN_HEIGHT; y++) {
-    for (int x = 0; x < SCREEN_WIDTH; x++) {
-      setPixel(x, y, false);
-    }
-  }
-  // Send the cleared bitmap
-  sendBitmap(&::screen[0][0]);
+  ::clearScreen();
 }

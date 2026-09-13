@@ -1,10 +1,1 @@
-# ninja log v5
-1217	2384	1789296691910435305	CMakeFiles/EInkStickyNotes.dir/communication/SerialPort.cpp.o	1f254e25f693a074
-2	21	1789296723263727793	EInkStickyNotes_autogen/timestamp	6fb2ea61205f0681
-2	21	1789296723263727793	/home/simon/Documents/EInkStickyNotes/EInkStickyNotes/Controller/build/EInkStickyNotes_autogen/mocs_compilation.cpp	6fb2ea61205f0681
-2	21	1789296723263727793	EInkStickyNotes_autogen/mocs_compilation.cpp	6fb2ea61205f0681
-1508	1779	1789296725018069651	EInkStickyNotes	a5e2cef94031d1e1
-2	21	1789296723263727793	/home/simon/Documents/EInkStickyNotes/EInkStickyNotes/Controller/build/EInkStickyNotes_autogen/timestamp	6fb2ea61205f0681
-22	1508	1789296724750036504	CMakeFiles/EInkStickyNotes.dir/main.cpp.o	c371f8e1ac3db69b
-1216	2663	1789296692189001018	CMakeFiles/EInkStickyNotes.dir/EInkStickyNotes_autogen/mocs_compilation.cpp.o	33bd88018dcc5fcf
-1217	2675	1789296692201832431	CMakeFiles/EInkStickyNotes.dir/ui/mainwindow.cpp.o	2c49cc7e022d1461
+# ninja log v7

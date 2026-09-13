@@ -17,6 +17,14 @@ qt_add_executable(EInkStickyNotes
 
     communication/SerialPort.cpp
     communication/SerialPort.h
+    communication/CommunicationManager.cpp
+    communication/CommunicationManager.h
+    communication/Packet.cpp
+    communication/Packet.h
+    communication/MessageType.h
+    communication/payloads/BitmapPayload.cpp
+    communication/payloads/BitmapPayload.h
+    main.h
 )
 
 target_include_directories(EInkStickyNotes
