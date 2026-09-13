@@ -4,20 +4,11 @@
 #include <QMainWindow>
 #include <QPushButton>
 
-#include <cstdint>
-
 #include "communication/SerialPort.h"
-
-#define SCREEN_WIDTH 400
-#define SCREEN_HEIGHT 300
-#define BYTES_PER_ROW (SCREEN_WIDTH / 8)
-
-extern uint8_t screen[SCREEN_HEIGHT][BYTES_PER_ROW];
+#include "main.h"
 extern SerialPort serialPort;
 
 void sendBitmap(uint8_t* bitmap);
-void setPixel(int x, int y, bool value);
-bool getPixel(int x, int y);
 
 namespace Ui {
   class MainWindow;
