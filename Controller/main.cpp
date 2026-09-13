@@ -53,10 +53,6 @@ int main(int argc, char *argv[]) {
     return a.exec();
 }
 
-void sendAck() {
-    // Serial.write("ACK");
-}
-
 void setPixel(int x, int y, bool value) {
     if (value) {
         screen[y][x / 8] |= (1 << (7 - (x % 8)));
