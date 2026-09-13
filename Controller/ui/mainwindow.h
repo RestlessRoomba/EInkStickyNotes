@@ -5,6 +5,7 @@
 #include <QPushButton>
 
 #include "communication/SerialPort.h"
+#include "canvaswidget.h"
 #include "main.h"
 extern SerialPort serialPort;
 
@@ -22,8 +23,10 @@ public:
 private slots:
   void handleButton();
   void handleClearButton();
+  void handleImportButton();
 private:
   QPushButton *m_button;
   QPushButton *m_clearButton;
+  CanvasWidget *m_canvas;
 };
 #endif // MAINWINDOW_H

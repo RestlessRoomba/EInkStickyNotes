@@ -1,28 +1,58 @@
 #include "communication/CommunicationManager.h"
 #include "mainwindow.h"
+#include "canvaswidget.h"
+
+#include <QFileDialog>
 
 MainWindow::MainWindow(QWidget *parent)
-  : QMainWindow(parent)
+    : QMainWindow(parent)
 {
-  // Create the button, make "this" the parent
-  m_button = new QPushButton("My Button", this);
-  // set size and location of the button
-  m_button->setGeometry(QRect(QPoint(100, 100), QSize(100, 100)));
+  m_canvas = new CanvasWidget(this);
+  m_canvas->setGeometry(20, 20, 128, 64);
 
-  QPushButton *clearButton = new QPushButton("Clear Display", this);
-  clearButton->setGeometry(QRect(QPoint(250, 100), QSize(100, 100)));
+  QPushButton *importButton =
+      new QPushButton("Import Image", this);
+  importButton->setGeometry(500, 20, 120, 40);
 
-  // Connect button signal to appropriate slot
-  connect(m_button, &QPushButton::released, this, &MainWindow::handleButton);
-  connect(clearButton, &QPushButton::released, this, &MainWindow::handleClearButton);
+  QPushButton *clearButton =
+      new QPushButton("Clear Display", this);
+  clearButton->setGeometry(500, 70, 120, 40);
+
+  QPushButton *sendButton =
+      new QPushButton("Send Bitmap", this);
+  sendButton->setGeometry(500, 120, 120, 40);
+
+  connect(importButton, &QPushButton::clicked,
+          this, &MainWindow::handleImportButton);
+
+  connect(clearButton, &QPushButton::clicked,
+          this, &MainWindow::handleClearButton);
+
+  connect(sendButton, &QPushButton::clicked,
+          this, &MainWindow::handleButton);
 }
- 
+
 void MainWindow::handleButton()
 {
+  m_canvas->toBitmap(::screen);
   ::sendBitmap();
 }
 
 void MainWindow::handleClearButton()
 {
   ::clearScreen();
+}
+
+void MainWindow::handleImportButton()
+{
+  QString filename = QFileDialog::getOpenFileName(
+      this,
+      "Open Image",
+      "",
+      "Images (*.png *.jpg *.jpeg *.bmp)");
+
+  if (!filename.isEmpty())
+  {
+    m_canvas->loadImage(filename);
+  }
 }

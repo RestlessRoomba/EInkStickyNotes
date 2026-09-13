@@ -25,6 +25,8 @@ qt_add_executable(EInkStickyNotes
     communication/payloads/BitmapPayload.cpp
     communication/payloads/BitmapPayload.h
     main.h
+    ui/canvaswidget.h
+    ui/canvaswidget.cpp
 )
 
 target_include_directories(EInkStickyNotes
