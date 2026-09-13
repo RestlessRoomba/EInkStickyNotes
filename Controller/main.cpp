@@ -35,11 +35,11 @@ int main(int argc, char *argv[]) {
         }
     }
 
-    SerialPort serialPort;
-    serialPort.openSerial();
+    // SerialPort serialPort;
+    // serialPort.openSerial();
 
     // Send Bitmap
-    sendBitmap(&screen[0][0]);
+    // sendBitmap(&screen[0][0]);
 
     return a.exec();
 }
@@ -51,7 +51,7 @@ void sendBitmap(uint8_t* bitmap) {
 
     for (int bytesSent = 0; bytesSent < DATA_SIZE; bytesSent += CHUNK_SIZE) {
         int bytesToSend = std::min(CHUNK_SIZE, DATA_SIZE - bytesSent);
-        serialPort.write(data + bytesSent, bytesToSend);
+        // serialPort.write(data + bytesSent, bytesToSend);
         waitForAck();
     }
 }
@@ -60,9 +60,9 @@ void waitForAck() {
     QByteArray ack;
 
     while (ack.size() < 3) {
-        if (Serial.waitForReadyRead()) {
-            ack += Serial.readAll();
-        }
+        //if (Serial.waitForReadyRead()) {
+            // ack += Serial.readAll();
+        //}
     }
 
     if (ack.left(3) == "ACK") {
@@ -71,7 +71,7 @@ void waitForAck() {
 }
 
 void sendAck() {
-    Serial.write("ACK");
+    // Serial.write("ACK");
 }
 
 void setPixel(int x, int y, bool value) {

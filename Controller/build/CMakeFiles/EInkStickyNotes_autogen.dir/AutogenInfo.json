@@ -550,6 +550,7 @@
 	],
 	"MOC_INCLUDES" : 
 	[
+		"/home/simon/Documents/EInkStickyNotes/EInkStickyNotes/Controller",
 		"/home/simon/Qt/6.11.2/gcc_64/include/QtCore",
 		"/home/simon/Qt/6.11.2/gcc_64/include",
 		"/home/simon/Qt/6.11.2/gcc_64/mkspecs/linux-g++",

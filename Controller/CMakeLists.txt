@@ -19,6 +19,11 @@ qt_add_executable(EInkStickyNotes
     communication/SerialPort.h
 )
 
+target_include_directories(EInkStickyNotes
+    PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}
+)
+
 target_link_libraries(EInkStickyNotes 
     PRIVATE 
         Qt6::Widgets

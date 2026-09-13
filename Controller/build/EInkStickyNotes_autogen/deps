@@ -8,6 +8,7 @@ EInkStickyNotes_autogen/timestamp: \
 	/home/simon/Documents/EInkStickyNotes/EInkStickyNotes/Controller/main.cpp \
 	/home/simon/Documents/EInkStickyNotes/EInkStickyNotes/Controller/ui/mainwindow.cpp \
 	/home/simon/Documents/EInkStickyNotes/EInkStickyNotes/Controller/ui/mainwindow.h \
+	/home/simon/Qt/6.11.2/gcc_64/include/QtCore/QByteArray \
 	/home/simon/Qt/6.11.2/gcc_64/include/QtCore/q17memory.h \
 	/home/simon/Qt/6.11.2/gcc_64/include/QtCore/q20bit.h \
 	/home/simon/Qt/6.11.2/gcc_64/include/QtCore/q20functional.h \
@@ -59,6 +60,7 @@ EInkStickyNotes_autogen/timestamp: \
 	/home/simon/Qt/6.11.2/gcc_64/include/QtCore/qglobalstatic.h \
 	/home/simon/Qt/6.11.2/gcc_64/include/QtCore/qhash.h \
 	/home/simon/Qt/6.11.2/gcc_64/include/QtCore/qhashfunctions.h \
+	/home/simon/Qt/6.11.2/gcc_64/include/QtCore/qiodevice.h \
 	/home/simon/Qt/6.11.2/gcc_64/include/QtCore/qiodevicebase.h \
 	/home/simon/Qt/6.11.2/gcc_64/include/QtCore/qiterable.h \
 	/home/simon/Qt/6.11.2/gcc_64/include/QtCore/qiterator.h \
@@ -83,6 +85,8 @@ EInkStickyNotes_autogen/timestamp: \
 	/home/simon/Qt/6.11.2/gcc_64/include/QtCore/qpair.h \
 	/home/simon/Qt/6.11.2/gcc_64/include/QtCore/qpoint.h \
 	/home/simon/Qt/6.11.2/gcc_64/include/QtCore/qprocessordetection.h \
+	/home/simon/Qt/6.11.2/gcc_64/include/QtCore/qproperty.h \
+	/home/simon/Qt/6.11.2/gcc_64/include/QtCore/qpropertyprivate.h \
 	/home/simon/Qt/6.11.2/gcc_64/include/QtCore/qrect.h \
 	/home/simon/Qt/6.11.2/gcc_64/include/QtCore/qrefcount.h \
 	/home/simon/Qt/6.11.2/gcc_64/include/QtCore/qscopedpointer.h \
@@ -161,6 +165,10 @@ EInkStickyNotes_autogen/timestamp: \
 	/home/simon/Qt/6.11.2/gcc_64/include/QtGui/qtguiglobal.h \
 	/home/simon/Qt/6.11.2/gcc_64/include/QtGui/qtransform.h \
 	/home/simon/Qt/6.11.2/gcc_64/include/QtGui/qwindowdefs.h \
+	/home/simon/Qt/6.11.2/gcc_64/include/QtSerialPort/QSerialPort \
+	/home/simon/Qt/6.11.2/gcc_64/include/QtSerialPort/qserialport.h \
+	/home/simon/Qt/6.11.2/gcc_64/include/QtSerialPort/qserialportglobal.h \
+	/home/simon/Qt/6.11.2/gcc_64/include/QtSerialPort/qtserialportexports.h \
 	/home/simon/Qt/6.11.2/gcc_64/include/QtWidgets/QMainWindow \
 	/home/simon/Qt/6.11.2/gcc_64/include/QtWidgets/QPushButton \
 	/home/simon/Qt/6.11.2/gcc_64/include/QtWidgets/qabstractbutton.h \
@@ -662,6 +670,7 @@ EInkStickyNotes_autogen/timestamp: \
 	/usr/include/c++/13/debug/assertions.h \
 	/usr/include/c++/13/debug/debug.h \
 	/usr/include/c++/13/exception \
+	/usr/include/c++/13/experimental/source_location \
 	/usr/include/c++/13/ext/aligned_buffer.h \
 	/usr/include/c++/13/ext/alloc_traits.h \
 	/usr/include/c++/13/ext/atomicity.h \

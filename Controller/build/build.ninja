@@ -53,7 +53,7 @@ build CMakeFiles/EInkStickyNotes.dir/EInkStickyNotes_autogen/mocs_compilation.cp
   DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_SERIALPORT_LIB -DQT_WIDGETS_LIB
   DEP_FILE = CMakeFiles/EInkStickyNotes.dir/EInkStickyNotes_autogen/mocs_compilation.cpp.o.d
   FLAGS = -DQT_QML_DEBUG -DQT_DECLARATIVE_DEBUG -g -std=gnu++17 -fPIC
-  INCLUDES = -I/home/simon/Documents/EInkStickyNotes/EInkStickyNotes/Controller/build/EInkStickyNotes_autogen/include -isystem /home/simon/Qt/6.11.2/gcc_64/include/QtCore -isystem /home/simon/Qt/6.11.2/gcc_64/include -isystem /home/simon/Qt/6.11.2/gcc_64/mkspecs/linux-g++ -isystem /home/simon/Qt/6.11.2/gcc_64/include/QtWidgets -isystem /home/simon/Qt/6.11.2/gcc_64/include/QtGui -isystem /home/simon/Qt/6.11.2/gcc_64/include/QtSerialPort
+  INCLUDES = -I/home/simon/Documents/EInkStickyNotes/EInkStickyNotes/Controller/build/EInkStickyNotes_autogen/include -I/home/simon/Documents/EInkStickyNotes/EInkStickyNotes/Controller -isystem /home/simon/Qt/6.11.2/gcc_64/include/QtCore -isystem /home/simon/Qt/6.11.2/gcc_64/include -isystem /home/simon/Qt/6.11.2/gcc_64/mkspecs/linux-g++ -isystem /home/simon/Qt/6.11.2/gcc_64/include/QtWidgets -isystem /home/simon/Qt/6.11.2/gcc_64/include/QtGui -isystem /home/simon/Qt/6.11.2/gcc_64/include/QtSerialPort
   OBJECT_DIR = CMakeFiles/EInkStickyNotes.dir
   OBJECT_FILE_DIR = CMakeFiles/EInkStickyNotes.dir/EInkStickyNotes_autogen
 
@@ -61,7 +61,7 @@ build CMakeFiles/EInkStickyNotes.dir/main.cpp.o: CXX_COMPILER__EInkStickyNotes_u
   DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_SERIALPORT_LIB -DQT_WIDGETS_LIB
   DEP_FILE = CMakeFiles/EInkStickyNotes.dir/main.cpp.o.d
   FLAGS = -DQT_QML_DEBUG -DQT_DECLARATIVE_DEBUG -g -std=gnu++17 -fPIC
-  INCLUDES = -I/home/simon/Documents/EInkStickyNotes/EInkStickyNotes/Controller/build/EInkStickyNotes_autogen/include -isystem /home/simon/Qt/6.11.2/gcc_64/include/QtCore -isystem /home/simon/Qt/6.11.2/gcc_64/include -isystem /home/simon/Qt/6.11.2/gcc_64/mkspecs/linux-g++ -isystem /home/simon/Qt/6.11.2/gcc_64/include/QtWidgets -isystem /home/simon/Qt/6.11.2/gcc_64/include/QtGui -isystem /home/simon/Qt/6.11.2/gcc_64/include/QtSerialPort
+  INCLUDES = -I/home/simon/Documents/EInkStickyNotes/EInkStickyNotes/Controller/build/EInkStickyNotes_autogen/include -I/home/simon/Documents/EInkStickyNotes/EInkStickyNotes/Controller -isystem /home/simon/Qt/6.11.2/gcc_64/include/QtCore -isystem /home/simon/Qt/6.11.2/gcc_64/include -isystem /home/simon/Qt/6.11.2/gcc_64/mkspecs/linux-g++ -isystem /home/simon/Qt/6.11.2/gcc_64/include/QtWidgets -isystem /home/simon/Qt/6.11.2/gcc_64/include/QtGui -isystem /home/simon/Qt/6.11.2/gcc_64/include/QtSerialPort
   OBJECT_DIR = CMakeFiles/EInkStickyNotes.dir
   OBJECT_FILE_DIR = CMakeFiles/EInkStickyNotes.dir
 
@@ -69,7 +69,7 @@ build CMakeFiles/EInkStickyNotes.dir/ui/mainwindow.cpp.o: CXX_COMPILER__EInkStic
   DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_SERIALPORT_LIB -DQT_WIDGETS_LIB
   DEP_FILE = CMakeFiles/EInkStickyNotes.dir/ui/mainwindow.cpp.o.d
   FLAGS = -DQT_QML_DEBUG -DQT_DECLARATIVE_DEBUG -g -std=gnu++17 -fPIC
-  INCLUDES = -I/home/simon/Documents/EInkStickyNotes/EInkStickyNotes/Controller/build/EInkStickyNotes_autogen/include -isystem /home/simon/Qt/6.11.2/gcc_64/include/QtCore -isystem /home/simon/Qt/6.11.2/gcc_64/include -isystem /home/simon/Qt/6.11.2/gcc_64/mkspecs/linux-g++ -isystem /home/simon/Qt/6.11.2/gcc_64/include/QtWidgets -isystem /home/simon/Qt/6.11.2/gcc_64/include/QtGui -isystem /home/simon/Qt/6.11.2/gcc_64/include/QtSerialPort
+  INCLUDES = -I/home/simon/Documents/EInkStickyNotes/EInkStickyNotes/Controller/build/EInkStickyNotes_autogen/include -I/home/simon/Documents/EInkStickyNotes/EInkStickyNotes/Controller -isystem /home/simon/Qt/6.11.2/gcc_64/include/QtCore -isystem /home/simon/Qt/6.11.2/gcc_64/include -isystem /home/simon/Qt/6.11.2/gcc_64/mkspecs/linux-g++ -isystem /home/simon/Qt/6.11.2/gcc_64/include/QtWidgets -isystem /home/simon/Qt/6.11.2/gcc_64/include/QtGui -isystem /home/simon/Qt/6.11.2/gcc_64/include/QtSerialPort
   OBJECT_DIR = CMakeFiles/EInkStickyNotes.dir
   OBJECT_FILE_DIR = CMakeFiles/EInkStickyNotes.dir/ui
 
@@ -77,7 +77,7 @@ build CMakeFiles/EInkStickyNotes.dir/communication/SerialPort.cpp.o: CXX_COMPILE
   DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_SERIALPORT_LIB -DQT_WIDGETS_LIB
   DEP_FILE = CMakeFiles/EInkStickyNotes.dir/communication/SerialPort.cpp.o.d
   FLAGS = -DQT_QML_DEBUG -DQT_DECLARATIVE_DEBUG -g -std=gnu++17 -fPIC
-  INCLUDES = -I/home/simon/Documents/EInkStickyNotes/EInkStickyNotes/Controller/build/EInkStickyNotes_autogen/include -isystem /home/simon/Qt/6.11.2/gcc_64/include/QtCore -isystem /home/simon/Qt/6.11.2/gcc_64/include -isystem /home/simon/Qt/6.11.2/gcc_64/mkspecs/linux-g++ -isystem /home/simon/Qt/6.11.2/gcc_64/include/QtWidgets -isystem /home/simon/Qt/6.11.2/gcc_64/include/QtGui -isystem /home/simon/Qt/6.11.2/gcc_64/include/QtSerialPort
+  INCLUDES = -I/home/simon/Documents/EInkStickyNotes/EInkStickyNotes/Controller/build/EInkStickyNotes_autogen/include -I/home/simon/Documents/EInkStickyNotes/EInkStickyNotes/Controller -isystem /home/simon/Qt/6.11.2/gcc_64/include/QtCore -isystem /home/simon/Qt/6.11.2/gcc_64/include -isystem /home/simon/Qt/6.11.2/gcc_64/mkspecs/linux-g++ -isystem /home/simon/Qt/6.11.2/gcc_64/include/QtWidgets -isystem /home/simon/Qt/6.11.2/gcc_64/include/QtGui -isystem /home/simon/Qt/6.11.2/gcc_64/include/QtSerialPort
   OBJECT_DIR = CMakeFiles/EInkStickyNotes.dir
   OBJECT_FILE_DIR = CMakeFiles/EInkStickyNotes.dir/communication
 
@@ -189,7 +189,7 @@ build EInkStickyNotes_autogen/timestamp EInkStickyNotes_autogen/mocs_compilation
 #############################################
 # Phony custom command for CMakeFiles/EInkStickyNotes_autogen_timestamp_deps
 
-build CMakeFiles/EInkStickyNotes_autogen_timestamp_deps | ${cmake_ninja_workdir}CMakeFiles/EInkStickyNotes_autogen_timestamp_deps: phony /home/simon/Qt/6.11.2/gcc_64/lib/libQt6SerialPort.so.6.11.2 /home/simon/Qt/6.11.2/gcc_64/libexec/uic /home/simon/Qt/6.11.2/gcc_64/libexec/moc /home/simon/Qt/6.11.2/gcc_64/lib/libQt6Widgets.so.6.11.2
+build CMakeFiles/EInkStickyNotes_autogen_timestamp_deps | ${cmake_ninja_workdir}CMakeFiles/EInkStickyNotes_autogen_timestamp_deps: phony /home/simon/Qt/6.11.2/gcc_64/libexec/uic /home/simon/Qt/6.11.2/gcc_64/lib/libQt6Widgets.so.6.11.2 /home/simon/Qt/6.11.2/gcc_64/libexec/moc /home/simon/Qt/6.11.2/gcc_64/lib/libQt6SerialPort.so.6.11.2
 
 
 #############################################
