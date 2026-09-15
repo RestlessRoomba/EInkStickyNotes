@@ -15,9 +15,7 @@ public:
     void loadImage(const QString &filename);
     void clear();
 
-    void toBitmap(
-        uint8_t screen[SCREEN_HEIGHT][BYTES_PER_ROW]
-    );
+    void toBitmap(std::vector<std::uint8_t>& bitmap);
 
 protected:
     void paintEvent(QPaintEvent *event) override;

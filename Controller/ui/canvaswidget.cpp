@@ -3,6 +3,7 @@
 #include <QPainter>
 #include <QPen>
 #include <QMouseEvent>
+
 #include <cstring>
 
 CanvasWidget::CanvasWidget(QWidget *parent)
@@ -21,13 +22,41 @@ void CanvasWidget::loadImage(const QString &filename)
     QImage image(filename);
 
     if (image.isNull())
+    {
         return;
+    }
 
-    m_image = image.convertToFormat(QImage::Format_Grayscale8).scaled(
-        SCREEN_WIDTH,
-        SCREEN_HEIGHT,
-        Qt::IgnoreAspectRatio,
-        Qt::SmoothTransformation);
+    // Convert to the 4 allowed gray-values
+    for (int y = 0; y < SCREEN_HEIGHT; y++)
+    {
+        for (int x = 0; x < SCREEN_WIDTH; x++)
+        {
+            const int gray = qGray(image.pixel(x, y));
+
+            int quantizedGray;
+
+            if (gray < 64)
+            {
+                quantizedGray = BLACK;
+            } 
+            else if (gray < 160)
+            {
+                quantizedGray = DARKGRAY;
+            }
+            else if (gray < 224)
+            {
+                quantizedGray = LIGHTGRAY;
+            }
+            else 
+            {
+                quantizedGray = WHITE;
+            }
+
+            image.setPixel(x, y, qRgb(quantizedGray, quantizedGray, quantizedGray));
+        }
+    }
+
+    m_image = image;
 
     update();
 }
@@ -71,14 +100,40 @@ void CanvasWidget::mouseReleaseEvent(QMouseEvent *event)
         m_drawing = false;
 }
 
-void CanvasWidget::toBitmap(uint8_t bitmap[SCREEN_HEIGHT][BYTES_PER_ROW])
+void CanvasWidget::toBitmap(std::vector<std::uint8_t>& bitmap)
 {
-    std::memset(bitmap, 0, sizeof(uint8_t) * SCREEN_HEIGHT * BYTES_PER_ROW);
+    bitmap.assign(SCREEN_SIZE, 0);
 
-    for (int y = 0; y < SCREEN_HEIGHT; ++y) {
-        for (int x = 0; x < SCREEN_WIDTH; ++x) {
-            if (qGray(m_image.pixel(x, y)) < 128)
-                bitmap[y][x / 8] |= (1 << (7 - (x % 8)));
+    for (int y = 0; y < SCREEN_HEIGHT; y++)
+    {
+        for (int x = 0; x < SCREEN_WIDTH; x++)
+        {
+            const int gray = qGray(m_image.pixel(x, y));  // Convert Color to Gray (0 to 255)
+
+            std::uint8_t pixelValue;
+
+            if (gray == BLACK)
+            {
+                pixelValue = 0;
+            }
+            else if (gray == DARKGRAY)
+            {
+                pixelValue = 1;
+            }
+            else if (gray == LIGHTGRAY)
+            {
+                pixelValue = 2;
+            }
+            else // WHITE
+            {
+                pixelValue = 3;
+            }
+
+            const int byteIndex = y * BYTES_PER_ROW + (x / 4);
+
+            const int shift = 6 - 2 * (x % 4);
+
+            bitmap[byteIndex] |= static_cast<std::uint8_t>(pixelValue << shift);
         }
     }
 }

@@ -11,9 +11,6 @@
 #include <vector>
 
 
-uint8_t screen[SCREEN_HEIGHT][BYTES_PER_ROW];
-
-
 int main(int argc, char *argv[]) 
 {
     QApplication a(argc, argv);
@@ -39,17 +36,7 @@ int sendBitmap()
     // Create a Communication Manager on that Serial Port
     CommunicationManager communication(serialPort);
 
-    // Type conversion (uint8_t 2D Array into std::vector<std::uint8_t>)
-    std::vector<std::uint8_t> bitmap;
-    bitmap.reserve(SCREEN_SIZE);
-
-    for (int y = 0; y < SCREEN_HEIGHT; ++y) {
-        for (int x = 0; x < BYTES_PER_ROW; ++x) {
-            bitmap.push_back(screen[y][x]);
-        }
-    }
-
-    if (!communication.sendBitmap(bitmap))
+    if (!communication.sendBitmap(screen))
     {
         qDebug() << "Error while sending bitmap.";
         return 1;
@@ -58,54 +45,8 @@ int sendBitmap()
     return 0;
 }
 
-int clearScreen() 
+int clearScreen()
 {
-    for (int y = 0; y < SCREEN_HEIGHT; y++) {
-        for (int x = 0; x < SCREEN_WIDTH; x++) {
-            setPixel(x, y, false);
-        }
-    }
-
-    // Open a Serial Port
-    SerialPort serialPort;
-
-    if (!serialPort.openSerial())
-    {
-        qDebug() << "Error while opening serial port.";
-
-        return 1;
-    }
-
-    CommunicationManager communication(serialPort);
-
-    // Type conversion (uint8_t 2D Array into std::vector<std::uint8_t>)
-    std::vector<std::uint8_t> bitmap;
-    bitmap.reserve(SCREEN_SIZE);
-
-    for (int y = 0; y < SCREEN_HEIGHT; ++y) {
-        for (int x = 0; x < BYTES_PER_ROW; ++x) {
-            bitmap.push_back(screen[y][x]);
-        }
-    }
-
-    if (!communication.sendBitmap(bitmap))
-    {
-        qDebug() << "Error while sending bitmap.";
-
-        return 1;
-    }
-
+    // Ich existiere nur, um den Compiler zufriden zu stellen
     return 0;
 }
-
-void setPixel(int x, int y, bool value) {
-    if (value) {
-        screen[y][x / 8] |= (1 << (7 - (x % 8)));
-    } else {
-        screen[y][x / 8] &= ~(1 << (7 - (x % 8)));
-        }
-    }
-
-bool getPixel(int x, int y) {
-        return (screen[y][x / 8] >> (7 - (x % 8))) & 1;
-    }
