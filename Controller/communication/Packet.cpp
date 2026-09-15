@@ -1,25 +1,15 @@
-/*
---- Packet Architecture ---
-Byte 0              MAGIC_1
-Byte 1              MAGIC_2
-Byte 2              TYPE
-Byte 3 - 4          SIZE
-Byte 5 - N          PAYLOAD
-Byte N+1 - (N+1)+2  CRC16       ---> not implemented yet
-*/
-
 #include "Packet.h"
 
 #include <stdexcept>
 
 
 // Default Constructor Type = Ping
-Packet::Packet() : m_type(MessageType::Ping)
+Packet::Packet() : m_type(MessageType::Ping), m_requestId(0)
 {
 }
 
 // Constructor with Type and Payload
-Packet::Packet(MessageType type, const std::vector<std::uint8_t>& payload) : m_type(type), m_payload(payload)
+Packet::Packet(MessageType type, std::uint16_t requestId, const std::vector<std::uint8_t>& payload) : m_type(type), m_requestId(requestId), m_payload(payload)
 {
 }
 
@@ -40,6 +30,10 @@ std::vector<std::uint8_t> Packet::serialize() const
     data.push_back(static_cast<std::uint8_t>(payloadSize & 0xFF));
     data.push_back(static_cast<std::uint8_t>((payloadSize >> 8) & 0xFF));
 
+    // Request ID
+    data.push_back(static_cast<std::uint8_t>(m_requestId & 0xFF));
+    data.push_back(static_cast<uint8_t>((m_requestId >> 8) & 0xFF));
+
     // --- Payload ---
     data.insert(data.end(), m_payload.begin(), m_payload.end());
 
@@ -49,8 +43,10 @@ std::vector<std::uint8_t> Packet::serialize() const
 Packet Packet::deserialize(const std::vector<std::uint8_t>& data)
 {
     // Check for Min Size
-    // MAGIC1 + MAGIC2 + TYPE + SIZE(2) = 5 Bytes
-    if (data.size() < 5)
+    // MAGIC1 + MAGIC2 + TYPE + SIZE(2) + REQ ID(2) = 7 Bytes
+    constexpr std::size_t HEADER_SIZE = 7;
+
+    if (data.size() < HEADER_SIZE)
     {
         throw std::invalid_argument("Packet too small.");
     }
@@ -67,15 +63,19 @@ Packet Packet::deserialize(const std::vector<std::uint8_t>& data)
     // Payload Size
     std::uint16_t payloadSize = static_cast<std::uint16_t>(data[3]) | (static_cast<std::uint16_t>(data[4]) << 8);
 
+    // Request ID
+    std::uint16_t requestId = static_cast<uint16_t>(data[5]) | (static_cast<uint16_t>(data[6]) << 8);
+
     // Check total Package Size
-    if (data.size() != 5 + payloadSize)
+    if (data.size() != HEADER_SIZE + payloadSize)
     {
-        throw std::invalid_argument("Invalid payload size");
+        throw std::invalid_argument("Invalid packet size");
     }
 
-    std::vector<std::uint8_t> payload(data.begin() + 5, data.begin() + 5 + payloadSize);
+    // Extract Payload
+    std::vector<std::uint8_t> payload(data.begin() + HEADER_SIZE, data.end());
 
-    return Packet(type, payload);
+    return Packet(type, requestId, payload);
 }
 
 MessageType Packet::type() const
@@ -83,7 +83,12 @@ MessageType Packet::type() const
     return m_type;
 }
 
-std::vector<std::uint8_t> Packet::payload() const
+std::uint16_t Packet::requestId() const
+{
+    return m_requestId;
+}
+
+const std::vector<std::uint8_t>& Packet::payload() const
 {
     return m_payload;
 }

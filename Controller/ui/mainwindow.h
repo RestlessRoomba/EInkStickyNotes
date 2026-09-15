@@ -7,6 +7,8 @@
 #include "communication/SerialPort.h"
 #include "canvaswidget.h"
 #include "main.h"
+
+
 extern SerialPort serialPort;
 
 void sendBitmap(uint8_t* bitmap);

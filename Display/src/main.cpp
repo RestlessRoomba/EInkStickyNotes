@@ -7,7 +7,7 @@
 
 #include <Arduino.h>
 #include <SPI.h>
-#include <GxEPD2_BW.h>
+#include <GxEPD2_4G_4G.h>
 #include <Fonts/FreeMonoBold12pt7b.h>
 #include <Fonts/FreeSerif12pt7b.h>
 
@@ -25,16 +25,20 @@
 // ---------- Colors ----------
 #define BLACK GxEPD_BLACK
 #define WHITE GxEPD_WHITE
+#define DARKGRAY GxEPD_DARKGREY
+#define LIGHTGRAY GxEPD_LIGHTGREY
 
 #define SCREEN_WIDTH 400
 #define SCREEN_HEIGHT 300
 
-#define BYTES_PER_ROW (SCREEN_WIDTH / 8)
-#define SCREEN_SIZE (SCREEN_HEIGHT * BYTES_PER_ROW)
+constexpr int BITS_PER_PIXEL = 2;
+constexpr int PIXELS_PER_BYTE = 4;
+constexpr int BYTES_PER_ROW = SCREEN_WIDTH / PIXELS_PER_BYTE;
+constexpr int SCREEN_SIZE = SCREEN_HEIGHT * BYTES_PER_ROW;
 
 
 // ---------- Display-Driver (V2) ----------
-GxEPD2_BW<GxEPD2_420_GDEY042T81, GxEPD2_420_GDEY042T81::HEIGHT> display(GxEPD2_420_GDEY042T81(EPD_CS, EPD_DC, EPD_RST, EPD_BUSY));
+GxEPD2_4G_4G<GxEPD2_420_GDEY042T81, GxEPD2_420_GDEY042T81::HEIGHT> display(GxEPD2_420_GDEY042T81(EPD_CS, EPD_DC, EPD_RST, EPD_BUSY));
 
 
 // ---------- Code ----------
@@ -42,6 +46,7 @@ GxEPD2_BW<GxEPD2_420_GDEY042T81, GxEPD2_420_GDEY042T81::HEIGHT> display(GxEPD2_4
 SerialPort serialPort;
 
 void drawScreen(const std::vector<std::uint8_t>& bitmap);
+void receiveBitmap();
 
 
 void setup()
@@ -60,6 +65,11 @@ void setup()
 }
 
 void loop()
+{
+  receiveBitmap();
+}
+
+void receiveBitmap()
 {
   std::vector<uint8_t> data;
 
@@ -87,17 +97,12 @@ void drawScreen(const std::vector<std::uint8_t>& bitmap)
     return;
   }
 
-  display.firstPage();
-
-  do {
-    display.fillScreen(WHITE);
-    display.drawBitmap(
-      0,
-      0,
+  display.drawImage_4G(
       bitmap.data(),
+      2,              // 2 bits per pixel
+      0,
+      0,
       SCREEN_WIDTH,
-      SCREEN_HEIGHT,
-      BLACK
-    );
-  } while (display.nextPage());
+      SCREEN_HEIGHT
+  );
 }
