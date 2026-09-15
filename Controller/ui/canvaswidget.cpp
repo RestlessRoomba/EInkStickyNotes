@@ -59,7 +59,7 @@ void CanvasWidget::mouseMoveEvent(QMouseEvent *event)
 
     const QPoint point = event->position().toPoint();
     QPainter painter(&m_image);
-    painter.setPen(QPen(Qt::black, 1));
+    painter.setPen(QPen(currentColor, currentSize));
     painter.drawLine(m_lastPoint, point);
     m_lastPoint = point;
     update();
@@ -69,6 +69,21 @@ void CanvasWidget::mouseReleaseEvent(QMouseEvent *event)
 {
     if (event->button() == Qt::LeftButton)
         m_drawing = false;
+}
+
+void CanvasWidget::setTool(char tool)
+{
+    m_currentTool = tool;
+}
+
+void CanvasWidget::setColor(const QColor &color)
+{
+    currentColor = color;
+}
+
+void CanvasWidget::setToolSize(int size)
+{
+    currentSize = size;
 }
 
 void CanvasWidget::toBitmap(uint8_t bitmap[SCREEN_HEIGHT][BYTES_PER_ROW])

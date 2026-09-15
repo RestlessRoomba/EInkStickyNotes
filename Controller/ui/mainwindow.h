@@ -21,11 +21,11 @@ class MainWindow : public QMainWindow
 public:
   explicit MainWindow(QWidget *parent = nullptr);
 private slots:
-  void handleButton();
+  void handleSendButton();
   void handleClearButton();
   void handleImportButton();
 private:
-  QPushButton *m_button;
+  QPushButton *m_sendButton;
   QPushButton *m_clearButton;
   CanvasWidget *m_canvas;
 };
