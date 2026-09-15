@@ -70,14 +70,15 @@ void CanvasWidget::clear()
 void CanvasWidget::paintEvent(QPaintEvent *)
 {
     QPainter painter(this);
-    painter.drawImage(0, 0, m_image);
+    painter.drawImage(rect(), m_image);
 }
 
 void CanvasWidget::mousePressEvent(QMouseEvent *event)
 {
     if (event->button() == Qt::LeftButton) {
         m_drawing = true;
-        m_lastPoint = event->position().toPoint();
+        m_lastPoint = QPoint(event->position().x() * SCREEN_WIDTH / width(),
+                             event->position().y() * SCREEN_HEIGHT / height());
     }
 }
 
@@ -86,7 +87,8 @@ void CanvasWidget::mouseMoveEvent(QMouseEvent *event)
     if (!m_drawing)
         return;
 
-    const QPoint point = event->position().toPoint();
+    const QPoint point(event->position().x() * SCREEN_WIDTH / width(),
+                       event->position().y() * SCREEN_HEIGHT / height());
     QPainter painter(&m_image);
     painter.setPen(QPen(currentColor, currentSize));
     painter.drawLine(m_lastPoint, point);

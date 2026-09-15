@@ -26,6 +26,7 @@ private slots:
   void handleSendButton();
   void handleClearButton();
   void handleImportButton();
+  void changeColor(const QColor &color, QPushButton *button, QPushButton *const allButtons[]);
 private:
   QPushButton *m_sendButton;
   QPushButton *m_clearButton;
