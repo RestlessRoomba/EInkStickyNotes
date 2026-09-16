@@ -27,6 +27,8 @@ qt_add_executable(EInkStickyNotes
     main.h
     ui/canvaswidget.h
     ui/canvaswidget.cpp
+    ui/tool.cpp
+    ui/tool.h
 )
 
 target_include_directories(EInkStickyNotes

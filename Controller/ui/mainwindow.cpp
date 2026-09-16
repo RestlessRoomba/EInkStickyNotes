@@ -1,6 +1,7 @@
 #include "communication/CommunicationManager.h"
 #include "mainwindow.h"
 #include "canvaswidget.h"
+#include "tool.h"
 
 #include <QFileDialog>
 #include <QHBoxLayout>
@@ -106,10 +107,10 @@ MainWindow::MainWindow(QWidget *parent)
   connect(importButton, &QPushButton::clicked, this, &MainWindow::handleImportButton);
   connect(clearButton, &QPushButton::clicked, this, &MainWindow::handleClearButton);
   connect(sendButton, &QPushButton::clicked, this, &MainWindow::handleSendButton);
-  connect(textBtn, &QPushButton::clicked, m_canvas, [this](){ m_canvas->setTool('T'); });
-  connect(lineBtn, &QPushButton::clicked, m_canvas, [this](){ m_canvas->setTool('L'); });
-  connect(rectBtn, &QPushButton::clicked, m_canvas, [this](){ m_canvas->setTool('R'); });
-  connect(circleBtn, &QPushButton::clicked, m_canvas, [this](){ m_canvas->setTool('C'); });
+  connect(textBtn, &QPushButton::clicked, m_canvas, [this](){ changeTool(Tool::Text); });
+  connect(lineBtn, &QPushButton::clicked, m_canvas, [this](){ changeTool(Tool::Line); });
+  connect(rectBtn, &QPushButton::clicked, m_canvas, [this](){ changeTool(Tool::Rectangle); });
+  connect(circleBtn, &QPushButton::clicked, m_canvas, [this](){ changeTool(Tool::Circle); });
   connect(wColorBtn, &QPushButton::clicked, m_canvas, [this, wColorBtn, allColors](){ changeColor(QColor(WHITE, 255, 255), wColorBtn, allColors); });
   connect(bColorBtn, &QPushButton::clicked, m_canvas, [this, bColorBtn, allColors](){ changeColor(QColor(BLACK, 0, 255), bColorBtn, allColors); });
   connect(dgColorBtn, &QPushButton::clicked, m_canvas, [this, dgColorBtn, allColors](){ changeColor(QColor(DARKGRAY, 128, 128), dgColorBtn, allColors); });

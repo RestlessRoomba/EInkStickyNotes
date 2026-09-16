@@ -1,4 +1,5 @@
 #include "canvaswidget.h"
+#include "tool.h"
 
 #include <QPainter>
 #include <QPen>
@@ -77,8 +78,9 @@ void CanvasWidget::mousePressEvent(QMouseEvent *event)
 {
     if (event->button() == Qt::LeftButton) {
         m_drawing = true;
-        m_lastPoint = QPoint(event->position().x() * SCREEN_WIDTH / width(),
+        firstpoint = QPoint(event->position().x() * SCREEN_WIDTH / width(),
                              event->position().y() * SCREEN_HEIGHT / height());
+        m_lastPoint = firstpoint;
     }
 }
 
@@ -91,7 +93,23 @@ void CanvasWidget::mouseMoveEvent(QMouseEvent *event)
                        event->position().y() * SCREEN_HEIGHT / height());
     QPainter painter(&m_image);
     painter.setPen(QPen(currentColor, currentSize));
-    painter.drawLine(m_lastPoint, point);
+    switch (::currentTool())
+    {
+        case Tool::Pen: // Pen
+            painter.drawLine(m_lastPoint, point);
+            break;
+        case Tool::Line: // Line
+            painter.drawLine(firstpoint, point);
+            break;
+        case Tool::Rectangle: // Rectangle
+            painter.fillRect(QRect(firstpoint, point), currentColor);
+            break;
+        case Tool::Circle: // Circle
+            painter.drawEllipse(QRect(firstpoint, point));
+            break;
+        default:
+            break;
+    }
     m_lastPoint = point;
     update();
 }
@@ -100,11 +118,6 @@ void CanvasWidget::mouseReleaseEvent(QMouseEvent *event)
 {
     if (event->button() == Qt::LeftButton)
         m_drawing = false;
-}
-
-void CanvasWidget::setTool(char tool)
-{
-    m_currentTool = tool;
 }
 
 void CanvasWidget::setColor(const QColor &color)

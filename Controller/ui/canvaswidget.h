@@ -14,7 +14,6 @@ public:
 
     void loadImage(const QString &filename);
     void clear();
-    void setTool(char tool);
     void setColor(const QColor &color);
     void setToolSize(int size);
 
@@ -32,7 +31,7 @@ private:
     QImage m_image;
     bool m_drawing = false;
     QPoint m_lastPoint;
-    char m_currentTool;
+    QPoint firstpoint;
     QColor currentColor;
     int currentSize = 1;
 };
