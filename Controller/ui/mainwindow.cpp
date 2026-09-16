@@ -47,6 +47,10 @@ MainWindow::MainWindow(QWidget *parent)
   textBtn->setFixedSize(30, 30);
   toolbox->addWidget(textBtn);
 
+  QPushButton *penBtn = new QPushButton("P", this);
+  penBtn->setFixedSize(30, 30);
+  toolbox->addWidget(penBtn);
+
   QPushButton *lineBtn = new QPushButton("L", this);
   lineBtn->setFixedSize(30, 30);
   toolbox->addWidget(lineBtn);
@@ -111,10 +115,11 @@ MainWindow::MainWindow(QWidget *parent)
   connect(lineBtn, &QPushButton::clicked, m_canvas, [this](){ changeTool(Tool::Line); });
   connect(rectBtn, &QPushButton::clicked, m_canvas, [this](){ changeTool(Tool::Rectangle); });
   connect(circleBtn, &QPushButton::clicked, m_canvas, [this](){ changeTool(Tool::Circle); });
-  connect(wColorBtn, &QPushButton::clicked, m_canvas, [this, wColorBtn, allColors](){ changeColor(QColor(WHITE, 255, 255), wColorBtn, allColors); });
-  connect(bColorBtn, &QPushButton::clicked, m_canvas, [this, bColorBtn, allColors](){ changeColor(QColor(BLACK, 0, 255), bColorBtn, allColors); });
-  connect(dgColorBtn, &QPushButton::clicked, m_canvas, [this, dgColorBtn, allColors](){ changeColor(QColor(DARKGRAY, 128, 128), dgColorBtn, allColors); });
-  connect(lgColorBtn, &QPushButton::clicked, m_canvas, [this, lgColorBtn, allColors](){ changeColor(QColor(LIGHTGRAY, 192, 192), lgColorBtn, allColors); });
+  connect(penBtn, &QPushButton::clicked, m_canvas, [this](){ changeTool(Tool::Pen); });
+  connect(wColorBtn, &QPushButton::clicked, m_canvas, [this, wColorBtn, allColors](){ changeColor(QColor(WHITE, WHITE, WHITE), wColorBtn, allColors); });
+  connect(bColorBtn, &QPushButton::clicked, m_canvas, [this, bColorBtn, allColors](){ changeColor(QColor(BLACK, BLACK, BLACK), bColorBtn, allColors); });
+  connect(dgColorBtn, &QPushButton::clicked, m_canvas, [this, dgColorBtn, allColors](){ changeColor(QColor(DARKGRAY, DARKGRAY, DARKGRAY), dgColorBtn, allColors); });
+  connect(lgColorBtn, &QPushButton::clicked, m_canvas, [this, lgColorBtn, allColors](){ changeColor(QColor(LIGHTGRAY, LIGHTGRAY, LIGHTGRAY), lgColorBtn, allColors); });
   connect(clearBtn, &QPushButton::clicked, m_canvas, &CanvasWidget::clear);
   connect(sizeSlider, &QSlider::valueChanged, m_canvas, &CanvasWidget::setToolSize);
 }

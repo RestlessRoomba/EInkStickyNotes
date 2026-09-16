@@ -7,32 +7,33 @@
 
 #include <cstring>
 
-CanvasWidget::CanvasWidget(QWidget *parent)
-    : QWidget(parent),
-      m_image(SCREEN_WIDTH,
-              SCREEN_HEIGHT,
-              QImage::Format_Grayscale8)
+CanvasWidget::CanvasWidget(QWidget *parent) : QWidget(parent), tempImage(SCREEN_WIDTH, SCREEN_HEIGHT, QImage::Format_ARGB32_Premultiplied), image(SCREEN_WIDTH, SCREEN_HEIGHT, QImage::Format_ARGB32_Premultiplied)
 {
-    m_image.fill(Qt::white);
+    image.fill(Qt::white);
+    tempImage.fill(Qt::transparent);
 
     setFixedSize(SCREEN_WIDTH, SCREEN_HEIGHT);
 }
 
 void CanvasWidget::loadImage(const QString &filename)
 {
-    QImage image(filename);
+    QImage loadedImage(filename);
 
-    if (image.isNull())
+    if (loadedImage.isNull())
     {
         return;
     }
+
+    loadedImage = loadedImage.scaled(SCREEN_WIDTH, SCREEN_HEIGHT,
+                                     Qt::IgnoreAspectRatio, Qt::SmoothTransformation)
+                               .convertToFormat(QImage::Format_ARGB32_Premultiplied);
 
     // Convert to the 4 allowed gray-values
     for (int y = 0; y < SCREEN_HEIGHT; y++)
     {
         for (int x = 0; x < SCREEN_WIDTH; x++)
         {
-            const int gray = qGray(image.pixel(x, y));
+            const int gray = qGray(loadedImage.pixel(x, y));
 
             int quantizedGray;
 
@@ -53,25 +54,26 @@ void CanvasWidget::loadImage(const QString &filename)
                 quantizedGray = WHITE;
             }
 
-            image.setPixel(x, y, qRgb(quantizedGray, quantizedGray, quantizedGray));
+            loadedImage.setPixel(x, y, qRgb(quantizedGray, quantizedGray, quantizedGray));
         }
     }
 
-    m_image = image;
+    image = loadedImage;
 
     update();
 }
 
 void CanvasWidget::clear()
 {
-    m_image.fill(Qt::white);
+    image.fill(Qt::white);
     update();
 }
 
 void CanvasWidget::paintEvent(QPaintEvent *)
 {
     QPainter painter(this);
-    painter.drawImage(rect(), m_image);
+    painter.drawImage(rect(), image);
+    painter.drawImage(rect(), tempImage);
 }
 
 void CanvasWidget::mousePressEvent(QMouseEvent *event)
@@ -80,7 +82,7 @@ void CanvasWidget::mousePressEvent(QMouseEvent *event)
         m_drawing = true;
         firstpoint = QPoint(event->position().x() * SCREEN_WIDTH / width(),
                              event->position().y() * SCREEN_HEIGHT / height());
-        m_lastPoint = firstpoint;
+        lastPoint = firstpoint;
     }
 }
 
@@ -91,12 +93,47 @@ void CanvasWidget::mouseMoveEvent(QMouseEvent *event)
 
     const QPoint point(event->position().x() * SCREEN_WIDTH / width(),
                        event->position().y() * SCREEN_HEIGHT / height());
-    QPainter painter(&m_image);
+
+    QPainter painter(&image);
+    QPainter tempPainter(&tempImage);
+    tempPainter.setPen(QPen(currentColor, currentSize));
     painter.setPen(QPen(currentColor, currentSize));
+    tempImage.fill(Qt::transparent);
     switch (::currentTool())
     {
         case Tool::Pen: // Pen
-            painter.drawLine(m_lastPoint, point);
+            painter.drawLine(lastPoint, point);
+            break;
+        case Tool::Line: // Line
+            tempPainter.drawLine(firstpoint, point);
+            break;
+        case Tool::Rectangle: // Rectangle
+            tempPainter.fillRect(QRect(firstpoint, point), currentColor);
+            break;
+        case Tool::Circle: // Circle
+            tempPainter.drawEllipse(QRect(firstpoint, point));
+            break;
+        default:
+            break;
+    }
+    lastPoint = point;
+    update();
+}
+
+void CanvasWidget::mouseReleaseEvent(QMouseEvent *event)
+{
+    if (event->button() == Qt::LeftButton)
+    {
+        QPainter painter(&image);
+        const QPoint point(event->position().x() * SCREEN_WIDTH / width(),
+                           event->position().y() * SCREEN_HEIGHT / height());
+
+        painter.setPen(QPen(currentColor, currentSize));
+
+        switch (::currentTool())
+        {
+        case Tool::Pen: // Pen
+            painter.drawLine(lastPoint, point);
             break;
         case Tool::Line: // Line
             painter.drawLine(firstpoint, point);
@@ -109,15 +146,12 @@ void CanvasWidget::mouseMoveEvent(QMouseEvent *event)
             break;
         default:
             break;
-    }
-    m_lastPoint = point;
-    update();
-}
-
-void CanvasWidget::mouseReleaseEvent(QMouseEvent *event)
-{
-    if (event->button() == Qt::LeftButton)
+        }
+        tempImage.fill(Qt::transparent);
+        lastPoint = point;
         m_drawing = false;
+        update();
+    }
 }
 
 void CanvasWidget::setColor(const QColor &color)
@@ -138,7 +172,7 @@ void CanvasWidget::toBitmap(std::vector<std::uint8_t>& bitmap)
     {
         for (int x = 0; x < SCREEN_WIDTH; x++)
         {
-            const int gray = qGray(m_image.pixel(x, y));  // Convert Color to Gray (0 to 255)
+            const int gray = qGray(image.pixel(x, y));  // Convert Color to Gray (0 to 255)
 
             std::uint8_t pixelValue;
 

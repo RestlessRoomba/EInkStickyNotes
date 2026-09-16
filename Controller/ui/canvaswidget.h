@@ -28,9 +28,12 @@ protected:
 
 
 private:
-    QImage m_image;
+    QImage image;
+    QImage tempImage;
+
     bool m_drawing = false;
-    QPoint m_lastPoint;
+    QPoint lastPoint;
+    QPoint point;
     QPoint firstpoint;
     QColor currentColor;
     int currentSize = 1;
