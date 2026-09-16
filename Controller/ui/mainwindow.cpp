@@ -4,9 +4,11 @@
 
 #include <QFileDialog>
 
-MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
+MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), m_serialPort(), m_communicationManager(m_serialPort)
 {
+  m_serialPort.setDataAvailableCallback([this](){m_communicationManager.process();});
+  m_serialPort.openSerial();
+
   m_canvas = new CanvasWidget(this);
   m_canvas->setGeometry(20, 20, 128, 64);
 

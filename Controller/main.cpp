@@ -50,3 +50,15 @@ int clearScreen()
     // Ich existiere nur, um den Compiler zufriden zu stellen
     return 0;
 }
+
+int setupCommunication()
+{
+    SerialPort serialPort;
+    CommunicationManager communicationManager(serialPort);
+    serialPort.setDataAvailableCallback([&communicationManager](){communicationManager.process();});
+
+    if (!serialPort.openSerial())
+    {
+        return;
+    }
+}

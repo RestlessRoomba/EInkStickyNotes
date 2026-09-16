@@ -1,12 +1,16 @@
 #pragma once
 
 #include <cstdint>
+#include <functional>
 #include <vector>
+#include <cstddef>
 
 
 class SerialPort
 {
     public:
+        using DataAvailableCallback = std::function<void()>;
+
         SerialPort();
 
         bool openSerial();

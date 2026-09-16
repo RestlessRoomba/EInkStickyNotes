@@ -20,13 +20,20 @@ namespace Ui {
 class MainWindow : public QMainWindow
 {
   Q_OBJECT
+
 public:
   explicit MainWindow(QWidget *parent = nullptr);
+  ~MainWindow() override = default;
+
 private slots:
   void handleButton();
   void handleClearButton();
   void handleImportButton();
+
 private:
+  SerialPort m_serialPort;
+  CommunicationManager m_communicationManager;
+
   QPushButton *m_button;
   QPushButton *m_clearButton;
   CanvasWidget *m_canvas;
