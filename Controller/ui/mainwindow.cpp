@@ -6,8 +6,12 @@
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), m_serialPort(), m_communicationManager(m_serialPort)
 {
-  m_serialPort.setDataAvailableCallback([this](){m_communicationManager.process();});
-  m_serialPort.openSerial();
+  m_serialPort.setDataAvailableCallback([this](){m_communicationManager.process(); });
+
+  if (!m_serialPort.openSerial())
+  {
+    qDebug() << "Error while opening serial port.";
+  }
 
   m_canvas = new CanvasWidget(this);
   m_canvas->setGeometry(20, 20, 128, 64);
@@ -36,13 +40,14 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), m_serialPort(), m
 
 void MainWindow::handleButton()
 {
-  m_canvas->toBitmap(::screen);
-  ::sendBitmap();
+  m_canvas->toBitmap(m_screen);
+  sendBitmap();
 }
 
 void MainWindow::handleClearButton()
 {
-  ::clearScreen();
+  m_canvas->clear();
+  m_screen.assign(SCREEN_SIZE, WHITE);
 }
 
 void MainWindow::handleImportButton()
@@ -56,5 +61,13 @@ void MainWindow::handleImportButton()
   if (!filename.isEmpty())
   {
     m_canvas->loadImage(filename);
+  }
+}
+
+void MainWindow::sendBitmap()
+{
+  if (!m_communicationManager.sendBitmap(m_screen))
+  {
+    qDebug() << "Could not start bitmap transfer.";
   }
 }

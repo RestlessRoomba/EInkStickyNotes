@@ -2,6 +2,7 @@
 #include "communication/Packet.h"
 #include "communication/MessageType.h"
 #include "communication/payloads/BitmapPayload.h"
+#include "communication/CommunicationManager.h"
 
 #include <vector>
 
@@ -44,16 +45,19 @@ GxEPD2_4G_4G<GxEPD2_420_GDEY042T81, GxEPD2_420_GDEY042T81::HEIGHT> display(GxEPD
 // ---------- Code ----------
 
 SerialPort serialPort;
+CommunicationManager communicationManager(serialPort);
 
 void drawScreen(const std::vector<std::uint8_t>& bitmap);
-void receiveBitmap();
 
 
 void setup()
 {
   serialPort.openSerial();
+  serialPort.setDataAvailableCallback([](){ communicationManager.process(); });
+  communicationManager.setBitmapReceivedCallback([](const std::vector<std::uint8_t>& bitmap){drawScreen(bitmap); });
 
   SPI.begin(EPD_SCK, EPD_MISO, EPD_MOSI, EPD_CS);
+  
   display.init(115200, true, 2, false);
   display.setFullWindow();
 
@@ -66,28 +70,7 @@ void setup()
 
 void loop()
 {
-  receiveBitmap();
-}
-
-void receiveBitmap()
-{
-  std::vector<uint8_t> data;
-
-  if (!serialPort.receiveData(data))
-  {
-    return;
-  }
-
-  Packet packet = Packet::deserialize(data);
-
-  if (packet.type() != MessageType::Bitmap)
-  {
-    return;
-  }
-
-  BitmapPayload payload = BitmapPayload::deserialize(packet.payload());
-
-  drawScreen(payload.bitmap());
+  serialPort.process();
 }
 
 void drawScreen(const std::vector<std::uint8_t>& bitmap)

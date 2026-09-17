@@ -6,11 +6,15 @@
 #include <cstdint>
 #include <vector>
 #include <unordered_map>
+#include <functional>
 
 
 class CommunicationManager
 {
     public:
+        using BitmapReceivedCallback = std::function<void(const std::vector<std::uint8_t>&)>;
+        void setBitmapReceivedCallback(BitmapReceivedCallback callback);
+
         explicit CommunicationManager(SerialPort& serialPort);
         
         bool sendBitmap(const std::vector<std::uint8_t>& bitmap);
@@ -47,4 +51,6 @@ class CommunicationManager
         std::uint16_t m_nextRequestId = 1;
 
         std::unordered_map<std::uint16_t, PendingRequest> m_pendingRequests;
+
+        BitmapReceivedCallback m_bitmapReceivedCallback;
 };

@@ -3,15 +3,13 @@
 
 #include <QMainWindow>
 #include <QPushButton>
+#include <vector>
+#include <cstdint>
 
 #include "communication/SerialPort.h"
 #include "canvaswidget.h"
 #include "main.h"
-
-
-extern SerialPort serialPort;
-
-void sendBitmap(uint8_t* bitmap);
+#include "communication/CommunicationManager.h"
 
 namespace Ui {
   class MainWindow;
@@ -31,8 +29,12 @@ private slots:
   void handleImportButton();
 
 private:
+  void sendBitmap();
+
   SerialPort m_serialPort;
   CommunicationManager m_communicationManager;
+
+  std::vector<uint8_t> m_screen;
 
   QPushButton *m_button;
   QPushButton *m_clearButton;

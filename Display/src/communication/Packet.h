@@ -30,8 +30,8 @@ class Packet
         const std::vector<std::uint8_t>& payload() const;
 
     private:
-        static constexpr std::uint8_t MAGIC_1 = 0xAA;
-        static constexpr std::uint8_t MAGIC_2 = 0x55;
+        static const std::uint8_t MAGIC_1;
+        static const std::uint8_t MAGIC_2;
 
         MessageType m_type;
         std::uint16_t m_requestId;

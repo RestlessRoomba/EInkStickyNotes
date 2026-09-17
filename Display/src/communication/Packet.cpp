@@ -2,6 +2,8 @@
 
 #include <stdexcept>
 
+const std::uint8_t Packet::MAGIC_1 = 0xAA;
+const std::uint8_t Packet::MAGIC_2 = 0x55;
 
 // Default Constructor Type = Ping
 Packet::Packet() : m_type(MessageType::Ping), m_requestId(0)

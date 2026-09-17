@@ -2,6 +2,8 @@
 #include "Packet.h"
 #include "payloads/BitmapPayload.h"
 
+#include <utility>
+
 
 CommunicationManager::CommunicationManager(SerialPort& SerialPort) : m_serialPort(SerialPort)
 {
@@ -80,6 +82,11 @@ void CommunicationManager::process()
                     BitmapPayload payload = BitmapPayload::deserialize(packet.payload());
                     m_currentBitmap = payload.bitmap();
 
+                    if (m_bitmapReceivedCallback)
+                    {
+                        m_bitmapReceivedCallback(m_currentBitmap);
+                    }
+
                     break;
                 }
 
@@ -101,6 +108,11 @@ void CommunicationManager::process()
 
                 BitmapPayload payload = BitmapPayload::deserialize(packet.payload());
                 m_currentBitmap = payload.bitmap();
+
+                if (m_bitmapReceivedCallback)
+                {
+                    m_bitmapReceivedCallback(m_currentBitmap);
+                }
 
                 // Request is complete
                 completeRequest(requestId);
@@ -139,4 +151,9 @@ void CommunicationManager::completeRequest(std::uint16_t requestId)
     }
 
     m_pendingRequests.erase(requestId);
+}
+
+void CommunicationManager::setBitmapReceivedCallback(BitmapReceivedCallback callback)
+{
+    m_bitmapReceivedCallback = std::move(callback);
 }
