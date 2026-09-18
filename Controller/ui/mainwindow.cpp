@@ -7,6 +7,14 @@
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), m_serialPort(), m_communicationManager(m_serialPort)
 {
   m_serialPort.setDataAvailableCallback([this](){m_communicationManager.process(); });
+  m_communicationManager.setBitmapReceivedCallback(
+    [this](const std::vector<uint8_t>& bitmap)
+    {
+      m_communicationManager.setCurrentBitmap(bitmap);
+      qDebug() << "Bitmap received: " << bitmap.size() << " bytes";
+      qDebug() << "Set received bitmap as current bitmap.";
+    }
+  );
 
   if (!m_serialPort.openSerial())
   {
@@ -40,14 +48,18 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), m_serialPort(), m
 
 void MainWindow::handleButton()
 {
-  m_canvas->toBitmap(m_screen);
+  std::vector<uint8_t> bitmap;
+  m_canvas->toBitmap(bitmap);
+  m_communicationManager.setCurrentBitmap(bitmap);
   sendBitmap();
 }
 
 void MainWindow::handleClearButton()
 {
   m_canvas->clear();
-  m_screen.assign(SCREEN_SIZE, WHITE);
+
+  std::vector<uint8_t> cleared(SCREEN_SIZE, WHITE);
+  m_communicationManager.setCurrentBitmap(cleared);
 }
 
 void MainWindow::handleImportButton()
@@ -66,8 +78,34 @@ void MainWindow::handleImportButton()
 
 void MainWindow::sendBitmap()
 {
-  if (!m_communicationManager.sendBitmap(m_screen))
+  if (!m_serialPort.isOpen())
+  {
+    if (!m_serialPort.openSerial())
+    {
+      qDebug() << "Error while opening serial port.";
+      return;
+    }
+  }
+
+  if (!m_communicationManager.sendBitmap(m_communicationManager.currentBitmap()))
   {
     qDebug() << "Could not start bitmap transfer.";
+  }
+}
+
+void MainWindow::getBitmap()
+{
+  if (!m_serialPort.isOpen())
+  {
+    if (!m_serialPort.openSerial())
+    {
+      qDebug() << "Error while opening serial port.";
+      return;
+    }
+  }
+
+  if (!m_communicationManager.getBitmap())
+  {
+    qDebug() << "Could not start getBitmap transfer.";
   }
 }

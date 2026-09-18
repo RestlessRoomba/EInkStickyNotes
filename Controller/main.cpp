@@ -19,9 +19,3 @@ int main(int argc, char *argv[])
 
     return a.exec();
 }
-
-int clearScreen()
-{
-    // Ich existiere nur, um den Compiler zufriden zu stellen
-    return 0;
-}

@@ -30,11 +30,10 @@ private slots:
 
 private:
   void sendBitmap();
+  void getBitmap();
 
   SerialPort m_serialPort;
   CommunicationManager m_communicationManager;
-
-  std::vector<uint8_t> m_screen;
 
   QPushButton *m_button;
   QPushButton *m_clearButton;

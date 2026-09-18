@@ -24,10 +24,9 @@ class CommunicationManager
         void process();
 
         const std::vector<std::uint8_t>& currentBitmap() const;
+        const std::vector<uint8_t>& receivedBitmap() const;
 
         void setCurrentBitmap(const std::vector<std::uint8_t>& bitmap);
-
-        const std::vector<uint8_t>& receivedBitmap() const;
 
     private:
         struct PendingRequest
@@ -46,7 +45,6 @@ class CommunicationManager
         PacketParser m_packetParser;
 
         std::vector<std::uint8_t> m_currentBitmap;
-        std::vector<std::uint8_t> m_receivedBitmap;
 
         std::uint16_t m_nextRequestId = 1;
 

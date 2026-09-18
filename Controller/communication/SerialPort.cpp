@@ -29,6 +29,11 @@ bool SerialPort::openSerial()
     return true;
 }
 
+bool SerialPort::isOpen() const
+{
+    return m_serial.isOpen();
+}
+
 bool SerialPort::sendData(const std::vector<std::uint8_t>& data)
 {
     if (data.empty())

@@ -16,6 +16,8 @@ class SerialPort
 
         bool openSerial();
 
+        bool isOpen() const;
+
         bool sendData(const std::vector<std::uint8_t>& data);
 
         std::vector<std::uint8_t> readAvailable();

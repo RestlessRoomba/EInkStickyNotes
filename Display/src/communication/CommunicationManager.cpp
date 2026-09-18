@@ -80,11 +80,16 @@ void CommunicationManager::process()
                 if (requestId == 0)
                 {
                     BitmapPayload payload = BitmapPayload::deserialize(packet.payload());
-                    m_currentBitmap = payload.bitmap();
+                    const auto& newBitmap = payload.bitmap();
+
+                    if (newBitmap == m_currentBitmap)
+                    {
+                        break;
+                    }
 
                     if (m_bitmapReceivedCallback)
                     {
-                        m_bitmapReceivedCallback(m_currentBitmap);
+                        m_bitmapReceivedCallback(newBitmap);
                     }
 
                     break;
@@ -107,12 +112,7 @@ void CommunicationManager::process()
                 }
 
                 BitmapPayload payload = BitmapPayload::deserialize(packet.payload());
-                m_currentBitmap = payload.bitmap();
-
-                if (m_bitmapReceivedCallback)
-                {
-                    m_bitmapReceivedCallback(m_currentBitmap);
-                }
+                (void)payload;
 
                 // Request is complete
                 completeRequest(requestId);
@@ -140,6 +140,29 @@ void CommunicationManager::process()
                 break;
             }
         }
+    }
+}
+
+std::uint16_t CommunicationManager::createRequestId()
+{
+    while (true)
+    {
+        const std::uint16_t requestId = m_nextRequestId;
+        m_nextRequestId++;
+
+        // 0 is reserved for normal BitmapMessage
+        if (m_nextRequestId == 0)
+        {
+            m_nextRequestId = 1;
+        }
+            
+        // ID already in use?
+        if (m_pendingRequests.find(requestId) != m_pendingRequests.end())
+        {
+            continue;
+        }
+
+        return requestId;
     }
 }
 

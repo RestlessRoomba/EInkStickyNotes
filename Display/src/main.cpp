@@ -54,7 +54,7 @@ void setup()
 {
   serialPort.openSerial();
   serialPort.setDataAvailableCallback([](){ communicationManager.process(); });
-  communicationManager.setBitmapReceivedCallback([](const std::vector<std::uint8_t>& bitmap){drawScreen(bitmap); });
+  communicationManager.setBitmapReceivedCallback([](const std::vector<std::uint8_t>& newBitmap){drawScreen(newBitmap); });
 
   SPI.begin(EPD_SCK, EPD_MISO, EPD_MOSI, EPD_CS);
   
@@ -66,6 +66,8 @@ void setup()
   do {
     display.fillScreen(WHITE);
   } while (display.nextPage());
+
+  communicationManager.setCurrentBitmap(std::vector<uint8_t>(SCREEN_SIZE, 0xFF)); // Fill current
 }
 
 void loop()
@@ -73,19 +75,16 @@ void loop()
   serialPort.process();
 }
 
-void drawScreen(const std::vector<std::uint8_t>& bitmap)
+void drawScreen(const std::vector<std::uint8_t>& newBitmap)
 {
-  if (bitmap.size() != SCREEN_SIZE)
-  {
-    return;
-  }
-
   display.drawImage_4G(
-      bitmap.data(),
-      2,              // 2 bits per pixel
-      0,
-      0,
-      SCREEN_WIDTH,
-      SCREEN_HEIGHT
+    newBitmap.data(),
+    2,
+    0,
+    0,
+    SCREEN_WIDTH,
+    SCREEN_HEIGHT
   );
+
+  communicationManager.setCurrentBitmap(newBitmap);
 }
