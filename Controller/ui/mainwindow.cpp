@@ -168,6 +168,20 @@ void MainWindow::changeColor(const QColor &color, QPushButton *button, QPushButt
   }
 }
 
+void MainWindow::changeColor(const QColor &color, QPushButton *button, QPushButton *const allButtons[])
+{
+  m_canvas->setColor(color);
+
+  for (int index = 0; index < 4; ++index)
+  {
+    if (allButtons[index] != button)
+    {
+      allButtons[index]->setChecked(false);
+      allButtons[index]->setCheckable(true);
+    }
+  }
+}
+
 void MainWindow::handleImportButton()
 {
   QString filename = QFileDialog::getOpenFileName(
