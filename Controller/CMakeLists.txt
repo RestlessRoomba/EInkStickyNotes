@@ -19,6 +19,8 @@ qt_add_executable(EInkStickyNotes
     communication/SerialPort.h
     communication/CommunicationManager.cpp
     communication/CommunicationManager.h
+    communication/PacketParser.cpp
+    communication/PacketParser.h
     communication/Packet.cpp
     communication/Packet.h
     communication/MessageType.h
