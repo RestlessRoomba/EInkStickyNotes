@@ -2,7 +2,18 @@
 
 #include <Arduino.h>
 #include <algorithm>
+#include <utility>
 
+
+namespace
+{
+    constexpr std::uint8_t MAGIC_1 = 0xAA;
+    constexpr std::uint8_t MAGIC_2 = 0x55;
+
+    constexpr char ACK_1 = 'A';
+    constexpr char ACK_2 = 'C';
+    constexpr char ACK_3 = 'K';
+}
 
 SerialPort::SerialPort()
 {
@@ -17,143 +28,281 @@ bool SerialPort::openSerial()
 
 bool SerialPort::sendData(const std::vector<std::uint8_t>& data)
 {
-    constexpr std::size_t CHUNK_SIZE = 256;
+    if (data.empty())
+        return true;
 
-    for (std::size_t bytes = 0; bytes < data.size(); bytes += CHUNK_SIZE)
-    {
-        std::size_t bytesToSend = std::min(CHUNK_SIZE, data.size() - bytes);
-
-        Serial.write(data.data() + bytes, bytesToSend);
-        Serial.flush();
-
-        if (!waitForAck())
-        {
-            return false;
-        }
-    }
-    
-    return true;
-}
-
-bool SerialPort::receiveData(std::vector<std::uint8_t>& data)
-{
-    constexpr std::size_t CHUNK_SIZE = 256;
-    constexpr std::size_t HEADER_SIZE = 5;
-    constexpr unsigned long TIMEOUT = 1000;
-
-    data.clear();
-
-    // Receive Header
-    unsigned long startTime = millis();
-
-    while (data.size() < HEADER_SIZE)
-    {
-        while (Serial.available() > 0 && data.size() < HEADER_SIZE)
-        {
-            data.push_back(static_cast<std::uint8_t>(Serial.read()));
-        }
-
-        if (millis() - startTime >= TIMEOUT)
-        {
-            return false;
-        }
-    }
-
-    // Check Header
-    constexpr std::uint8_t MAGIC_1 = 0xAA;
-    constexpr std::uint8_t MAGIC_2 = 0x55;
-
-    if (data[0] != MAGIC_1 || data[1] != MAGIC_2)
-    {
+    if (m_txActive)
         return false;
-    }
 
-    // Read Payload Size
-    std::uint16_t payloadSize = static_cast<std::uint16_t>(data[3]) | (static_cast<uint16_t>(data[4]) << 8);
+    m_txData = data;
+    m_txOffset = 0;
+    m_txChunkSize = 0;
+    m_txChunkSent = 0;
 
-    // Total Size
-    std::size_t totalSize = HEADER_SIZE + payloadSize;
+    m_txActive = true;
+    m_waitingForAck = false;
 
-    // Receive Remaining First Block Data
-    std::size_t firstChunkSize = std::min(CHUNK_SIZE, totalSize);
-
-    startTime = millis();
-
-    while (data.size() < firstChunkSize)
-    {
-        while (Serial.available() > 0 && data.size() < firstChunkSize)
-        {
-            data.push_back(static_cast<std::uint8_t>(Serial.read()));
-        }
-
-        if (millis() - startTime >= TIMEOUT)
-        {
-            return false;
-        }
-    }
-
-    // Acknowledge First Block
-    sendAck();
-
-    // Receive Remaining Blocks
-    while (data.size() < totalSize)
-    {
-        std::size_t remaining = totalSize - data.size();
-        std::size_t chunkSize = std::min(CHUNK_SIZE, remaining);
-        std::size_t targetSize = data.size() + chunkSize;
-
-        startTime = millis();
-
-        while (data.size() < targetSize)
-        {
-            while (Serial.available() > 0 && data.size() < targetSize)
-            {
-                data.push_back(static_cast<std::uint8_t>(Serial.read()));
-            }
-
-            if (millis() - startTime >= TIMEOUT)
-            {
-                return false;
-            }
-        }
-
-        sendAck();
-    }
+    startNextTransmitChunk();
 
     return true;
 }
 
-bool SerialPort::waitForAck()
+void SerialPort::startNextTransmitChunk()
 {
-    constexpr unsigned long TIMEOUT = 1000;
-    unsigned long startTime = millis();
+    if (!m_txActive)
+        return;
 
-    std::vector<std::uint8_t> received;
+    if (m_waitingForAck)
+        return;
 
-    while (millis() - startTime < TIMEOUT)
+    if (m_txOffset >= m_txData.size())
     {
-        while (Serial.available() > 0)
-        {
-            received.push_back(static_cast<std::uint8_t>(Serial.read()));
+        m_txData.clear();
 
-            if (received.size() >= 3)
+        m_txOffset = 0;
+        m_txChunkSize = 0;
+        m_txChunkSent = 0;
+
+        m_txActive = false;
+
+        return;
+    }
+
+    const std::size_t remaining =
+        m_txData.size() - m_txOffset;
+
+    m_txChunkSize =
+        std::min(CHUNK_SIZE, remaining);
+
+    m_txChunkSent = 0;
+
+    processTransmit();
+}
+
+void SerialPort::processTransmit()
+{
+    if (!m_txActive)
+        return;
+
+    if (m_waitingForAck)
+        return;
+
+    if (m_txChunkSent >= m_txChunkSize)
+    {
+        m_txOffset += m_txChunkSize;
+
+        m_waitingForAck = true;
+
+        return;
+    }
+
+    const std::size_t remaining =
+        m_txChunkSize - m_txChunkSent;
+
+    const int available =
+        Serial.availableForWrite();
+
+    if (available <= 0)
+        return;
+
+    const std::size_t bytesToWrite =
+        std::min(
+            remaining,
+            static_cast<std::size_t>(available)
+        );
+
+    const std::size_t written =
+        Serial.write(
+            m_txData.data()
+                + m_txOffset
+                + m_txChunkSent,
+            bytesToWrite
+        );
+
+    m_txChunkSent += written;
+
+    if (m_txChunkSent >= m_txChunkSize)
+    {
+        m_txOffset += m_txChunkSize;
+        m_waitingForAck = true;
+    }
+}
+
+void SerialPort::handleTransmitAck(std::uint8_t byte)
+{
+    static std::uint8_t ackState = 0;
+
+    switch (ackState)
+    {
+        case 0:
+            if (byte == ACK_1)
+                ackState = 1;
+            break;
+
+        case 1:
+            if (byte == ACK_2)
+                ackState = 2;
+            else if (byte == ACK_1)
+                ackState = 1;
+            else
+                ackState = 0;
+            break;
+
+        case 2:
+            if (byte == ACK_3)
             {
-                std::size_t size = received.size();
+                ackState = 0;
 
-                if (received[size - 3] == 'A' &&
-                    received[size - 2] == 'C' &&
-                    received[size - 1] == 'K')
+                m_waitingForAck = false;
+
+                if (m_txOffset >= m_txData.size())
                 {
-                    return true;
+                    m_txData.clear();
+
+                    m_txOffset = 0;
+                    m_txChunkSize = 0;
+                    m_txChunkSent = 0;
+
+                    m_txActive = false;
+                }
+                else
+                {
+                    startNextTransmitChunk();
                 }
             }
-        }
-    }
+            else if (byte == ACK_1)
+            {
+                ackState = 1;
+            }
+            else
+            {
+                ackState = 0;
+            }
 
-    return false;
+            break;
+    }
 }
 
-void SerialPort::sendAck()
+void SerialPort::processReceive()
 {
-    Serial.write("ACK");
+    while (Serial.available() > 0)
+    {
+        const std::uint8_t byte =
+            static_cast<std::uint8_t>(
+                Serial.read()
+            );
+
+        if (m_waitingForAck)
+        {
+            handleTransmitAck(byte);
+            continue;
+        }
+
+        m_rxPacketData.push_back(byte);
+    }
+
+    processReceivedData();
+}
+
+void SerialPort::processReceivedData()
+{
+    if (m_rxExpectedSize == 0)
+    {
+        if (m_rxPacketData.size() < HEADER_SIZE)
+            return;
+
+        if (m_rxPacketData[0] != MAGIC_1 ||
+            m_rxPacketData[1] != MAGIC_2)
+        {
+            m_rxPacketData.erase(
+                m_rxPacketData.begin()
+            );
+
+            return;
+        }
+
+        const std::uint16_t payloadSize =
+            static_cast<std::uint16_t>(
+                m_rxPacketData[3]
+            ) |
+            (
+                static_cast<std::uint16_t>(
+                    m_rxPacketData[4]
+                ) << 8
+            );
+
+        m_rxExpectedSize =
+            HEADER_SIZE + payloadSize;
+    }
+
+    while (true)
+    {
+        const std::size_t remaining =
+            m_rxExpectedSize - m_rxAckedBytes;
+
+        const std::size_t expectedChunkSize =
+            std::min(
+                CHUNK_SIZE,
+                remaining
+            );
+
+        if (m_rxPacketData.size() <
+            m_rxAckedBytes + expectedChunkSize)
+        {
+            return;
+        }
+
+        m_receivedData.insert(
+            m_receivedData.end(),
+            m_rxPacketData.begin()
+                + m_rxAckedBytes,
+            m_rxPacketData.begin()
+                + m_rxAckedBytes
+                + expectedChunkSize
+        );
+
+        m_rxAckedBytes += expectedChunkSize;
+
+        sendTransportAck();
+
+        if (m_rxAckedBytes >= m_rxExpectedSize)
+        {
+            m_rxPacketData.clear();
+
+            m_rxAckedBytes = 0;
+            m_rxExpectedSize = 0;
+
+            if (m_dataAvailableCallback)
+            {
+                m_dataAvailableCallback();
+            }
+
+            return;
+        }
+    }
+}
+
+void SerialPort::sendTransportAck()
+{
+    Serial.write("ACK", 3);
+}
+
+
+std::vector<std::uint8_t> SerialPort::readAvailable()
+{
+    std::vector<std::uint8_t> data = std::move(m_receivedData);
+    m_receivedData.clear();
+
+    return data;
+}
+
+void SerialPort::setDataAvailableCallback(DataAvailableCallback callback)
+{
+    m_dataAvailableCallback = std::move(callback);
+}
+
+void SerialPort::process()
+{
+    processTransmit();
+    processReceive();
 }

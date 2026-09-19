@@ -8,10 +8,24 @@
 #include <QPushButton>
 #include <QSlider>
 
-MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
+MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), m_serialPort(), m_communicationManager(m_serialPort)
 {
   this->setWindowTitle("E-Ink Sticky Notes");
+
+  m_serialPort.setDataAvailableCallback([this](){m_communicationManager.process(); });
+  m_communicationManager.setBitmapReceivedCallback(
+    [this](const std::vector<uint8_t>& bitmap)
+    {
+      m_communicationManager.setCurrentBitmap(bitmap);
+      qDebug() << "Bitmap received: " << bitmap.size() << " bytes";
+      qDebug() << "Set received bitmap as current bitmap.";
+    }
+  );
+
+  if (!m_serialPort.openSerial())
+  {
+    qDebug() << "Error while opening serial port.";
+  }
 
   m_canvas = new CanvasWidget(this);
         m_canvas->setFixedSize(128 * 4, 64 * 4); // Scale up the canvas for better visibility
@@ -126,13 +140,18 @@ MainWindow::MainWindow(QWidget *parent)
 
 void MainWindow::handleSendButton()
 {
-  m_canvas->toBitmap(::screen);
-  ::sendBitmap();
+  std::vector<uint8_t> bitmap;
+  m_canvas->toBitmap(bitmap);
+  m_communicationManager.setCurrentBitmap(bitmap);
+  sendBitmap();
 }
 
 void MainWindow::handleClearButton()
 {
-  ::clearScreen();
+  m_canvas->clear();
+
+  std::vector<uint8_t> cleared(SCREEN_SIZE, WHITE);
+  m_communicationManager.setCurrentBitmap(cleared);
 }
 
 void MainWindow::changeColor(const QColor &color, QPushButton *button, QPushButton *const allButtons[])
@@ -160,5 +179,39 @@ void MainWindow::handleImportButton()
   if (!filename.isEmpty())
   {
     m_canvas->loadImage(filename);
+  }
+}
+
+void MainWindow::sendBitmap()
+{
+  if (!m_serialPort.isOpen())
+  {
+    if (!m_serialPort.openSerial())
+    {
+      qDebug() << "Error while opening serial port.";
+      return;
+    }
+  }
+
+  if (!m_communicationManager.sendBitmap(m_communicationManager.currentBitmap()))
+  {
+    qDebug() << "Could not start bitmap transfer.";
+  }
+}
+
+void MainWindow::getBitmap()
+{
+  if (!m_serialPort.isOpen())
+  {
+    if (!m_serialPort.openSerial())
+    {
+      qDebug() << "Error while opening serial port.";
+      return;
+    }
+  }
+
+  if (!m_communicationManager.getBitmap())
+  {
+    qDebug() << "Could not start getBitmap transfer.";
   }
 }

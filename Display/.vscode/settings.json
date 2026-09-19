@@ -1,13 +1,15 @@
 {
     "editor.quickSuggestions": {
-        "other": false,
+        "other": true,
         "comments": false,
         "strings": false
     },
-    "editor.suggestOnTriggerCharacters": false,
-    "editor.wordBasedSuggestions": "off",
-    "editor.parameterHints.enabled": false,
-    "C_Cpp.intelliSenseEngine": "Disabled",
+    "editor.suggestOnTriggerCharacters": true,
+    "editor.wordBasedSuggestions": "on",
+    "editor.parameterHints.enabled": true,
     "C_Cpp.intelliSenseEngine": "default",
-    "C_Cpp.default.configurationProvider": "platformio.platformio-ide"
+    "C_Cpp.default.configurationProvider": "platformio.platformio-ide",
+    "editor.inlineSuggest.enabled": false,
+    "github.copilot.enable": false,
+    "github.copilot.inlineSuggest.enable": false
 }
