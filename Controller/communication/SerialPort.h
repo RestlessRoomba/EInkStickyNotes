@@ -13,8 +13,10 @@ class SerialPort
         using DataAvailableCallback = std::function<void()>;
 
         SerialPort();
+        ~SerialPort();
 
         bool openSerial();
+        void closeSerial();
 
         bool isOpen() const;
 

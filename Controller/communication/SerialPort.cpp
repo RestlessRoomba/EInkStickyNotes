@@ -13,8 +13,15 @@ SerialPort::SerialPort()
     QObject::connect(&m_serial, &QSerialPort::readyRead, [this](){handleReadyRead();});
 }
 
+SerialPort::~SerialPort()
+{
+    closeSerial();
+}
+
 bool SerialPort::openSerial()
 {
+    closeSerial();
+
     m_serial.setPortName(ESP32_PORT);
     m_serial.setBaudRate(QSerialPort::Baud115200);
 
@@ -25,8 +32,38 @@ bool SerialPort::openSerial()
 
     m_serial.clear(QSerialPort::AllDirections); // Clear Serial
 
+    m_txData.clear();
+    m_txOffset = 0;
+    m_txActive = false;
+    m_waitingForAck = false;
+
+    m_rxPacketData.clear();
+    m_rxAckedBytes = 0;
+    m_rxExpectedSize = 0;
+    m_receivedData.clear();
+    m_ackBuffer.clear();
+
     qDebug() << "Serial opened.";
     return true;
+}
+
+void SerialPort::closeSerial()
+{
+    if (m_serial.isOpen())
+    {
+        m_serial.close();
+    }
+
+    m_txData.clear();
+    m_txOffset = 0;
+    m_txActive = false;
+    m_waitingForAck = false;
+
+    m_rxPacketData.clear();
+    m_rxAckedBytes = 0;
+    m_rxExpectedSize = 0;
+    m_receivedData.clear();
+    m_ackBuffer.clear();
 }
 
 bool SerialPort::isOpen() const

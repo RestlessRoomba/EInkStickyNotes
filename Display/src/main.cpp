@@ -67,7 +67,7 @@ void setup()
     display.fillScreen(WHITE);
   } while (display.nextPage());
 
-  communicationManager.setCurrentBitmap(std::vector<uint8_t>(SCREEN_SIZE, 0xFF)); // Fill current
+  communicationManager.setCurrentBitmap(std::vector<uint8_t>(SCREEN_SIZE, 0xFF)); // Fill current bitmap white
 }
 
 void loop()

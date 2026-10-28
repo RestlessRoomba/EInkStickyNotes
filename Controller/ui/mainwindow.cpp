@@ -19,6 +19,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), m_serialPort(), m
       m_communicationManager.setCurrentBitmap(bitmap);
       qDebug() << "Bitmap received: " << bitmap.size() << " bytes";
       qDebug() << "Set received bitmap as current bitmap.";
+      m_canvas->loadBitmap(m_communicationManager.currentBitmap());
     }
   );
 
@@ -28,7 +29,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), m_serialPort(), m
   }
 
   m_canvas = new CanvasWidget(this);
-        m_canvas->setFixedSize(128 * 4, 64 * 4); // Scale up the canvas for better visibility
+
+  // Get current Bitmap from Display
+  // getBitmap();
+  // WIP: Fix State Machines 
 
   // ToolBox ====================================
   QHBoxLayout *toolbox = new QHBoxLayout();
@@ -152,20 +156,7 @@ void MainWindow::handleClearButton()
 
   std::vector<uint8_t> cleared(SCREEN_SIZE, WHITE);
   m_communicationManager.setCurrentBitmap(cleared);
-}
-
-void MainWindow::changeColor(const QColor &color, QPushButton *button, QPushButton *const allButtons[])
-{
-  m_canvas->setColor(color);
-
-  for (int index = 0; index < 4; ++index)
-  {
-    if (allButtons[index] != button)
-    {
-      allButtons[index]->setChecked(false);
-      allButtons[index]->setCheckable(true);
-    }
-  }
+  m_communicationManager.sendBitmap(m_communicationManager.currentBitmap());
 }
 
 void MainWindow::changeColor(const QColor &color, QPushButton *button, QPushButton *const allButtons[])
@@ -211,6 +202,8 @@ void MainWindow::sendBitmap()
   {
     qDebug() << "Could not start bitmap transfer.";
   }
+
+  qDebug() << "Starting bitmap transfer.";
 }
 
 void MainWindow::getBitmap()
@@ -228,4 +221,6 @@ void MainWindow::getBitmap()
   {
     qDebug() << "Could not start getBitmap transfer.";
   }
+
+  qDebug() << "Requested bitmap from ESP.";
 }

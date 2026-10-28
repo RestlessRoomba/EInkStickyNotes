@@ -111,7 +111,7 @@ void CommunicationManager::process()
 
                 if (m_bitmapReceivedCallback)
                 {
-                    m_bitmapReceivedCallback(m_currentBitmap);
+                    m_bitmapReceivedCallback(newBitmap);
                 }
 
                 // Request is complete

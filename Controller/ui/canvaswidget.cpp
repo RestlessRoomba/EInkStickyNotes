@@ -1,5 +1,6 @@
 #include "canvaswidget.h"
 #include "tool.h"
+#include "communication/CommunicationManager.h"
 
 #include <QPainter>
 #include <QPen>
@@ -34,25 +35,11 @@ void CanvasWidget::loadImage(const QString &filename)
         for (int x = 0; x < SCREEN_WIDTH; x++)
         {
             const int gray = qGray(loadedImage.pixel(x, y));
+            int quantizedGray = convertShade(gray);
 
-            int quantizedGray;
-
-            if (gray < 64)
-            {
-                quantizedGray = BLACK;
-            } 
-            else if (gray < 160)
-            {
-                quantizedGray = DARKGRAY;
-            }
-            else if (gray < 224)
-            {
-                quantizedGray = LIGHTGRAY;
-            }
-            else 
-            {
-                quantizedGray = WHITE;
-            }
+            // Use Floyd-Steinberg algorithm to raise image quality
+            int error = quantizedGray - gray;
+            floydSteinberg(x, y, loadedImage, error);
 
             loadedImage.setPixel(x, y, qRgb(quantizedGray, quantizedGray, quantizedGray));
         }
@@ -60,6 +47,103 @@ void CanvasWidget::loadImage(const QString &filename)
 
     image = loadedImage;
 
+    update();
+}
+
+int CanvasWidget::convertShade(int gray)
+{
+    int quantizedGray;
+
+    if (gray < 64)
+    {
+        quantizedGray = BLACK;
+    } 
+    else if (gray < 160)
+    {
+        quantizedGray = DARKGRAY;
+    }
+    else if (gray < 224)
+    {
+        quantizedGray = LIGHTGRAY;
+    }
+    else 
+    {
+        quantizedGray = WHITE;
+    }
+
+    return quantizedGray;
+}
+
+void CanvasWidget::floydSteinberg(int x, int y, QImage &image, int error)
+{
+    auto clampGray = [](int value) {
+        if (value < 0)
+            return 0;
+        if (value > 255)
+            return 255;
+        return value;
+    };
+
+    int newGray;
+
+    if (x + 1 < image.width())
+    {
+        newGray = qGray(image.pixel(x + 1, y));
+        newGray += (-error * 7) / 16;
+        image.setPixel(x + 1, y, qRgb(clampGray(newGray), clampGray(newGray), clampGray(newGray)));
+    }
+
+    if (x + 1 < image.width() && y + 1 < image.height())
+    {
+        newGray = qGray(image.pixel(x + 1, y + 1));
+        newGray += (-error * 1) / 16;
+        image.setPixel(x + 1, y + 1, qRgb(clampGray(newGray), clampGray(newGray), clampGray(newGray)));
+    }
+
+    if (y + 1 < image.height())
+    {
+        newGray = qGray(image.pixel(x, y + 1));
+        newGray += (-error * 5) / 16;
+        image.setPixel(x, y + 1, qRgb(clampGray(newGray), clampGray(newGray), clampGray(newGray)));
+    }
+
+    if (x - 1 >= 0 && y + 1 < image.height())
+    {
+        newGray = qGray(image.pixel(x - 1, y + 1));
+        newGray += (-error * 3) / 16;
+        image.setPixel(x - 1, y + 1, qRgb(clampGray(newGray), clampGray(newGray), clampGray(newGray)));
+    }
+}
+
+void CanvasWidget::loadBitmap(const std::vector<std::uint8_t>& bitmap)
+{
+    // Create an image and fill it by decoding 2bpp packed bitmap data
+    QImage loadedImage(SCREEN_WIDTH, SCREEN_HEIGHT, QImage::Format_ARGB32_Premultiplied);
+    loadedImage.fill(Qt::white);
+
+    for (int y = 0; y < SCREEN_HEIGHT; ++y)
+    {
+        for (int x = 0; x < SCREEN_WIDTH; ++x)
+        {
+            const int byteIndex = y * BYTES_PER_ROW + (x / 4);
+            const int shift = 6 - 2 * (x % 4);
+            const uint8_t packed = bitmap[byteIndex];
+            const uint8_t pixelValue = (packed >> shift) & 0x03; // 0..3
+
+            int gray;
+            switch (pixelValue)
+            {
+                case 0: gray = BLACK; break;
+                case 1: gray = DARKGRAY; break;
+                case 2: gray = LIGHTGRAY; break;
+                default: gray = WHITE; break;
+            }
+
+            loadedImage.setPixel(x, y, qRgb(gray, gray, gray));
+        }
+    }
+
+    image = loadedImage;
     update();
 }
 

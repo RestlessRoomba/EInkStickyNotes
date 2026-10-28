@@ -13,6 +13,7 @@ public:
     explicit CanvasWidget(QWidget *parent = nullptr);
 
     void loadImage(const QString &filename);
+    void loadBitmap(const std::vector<std::uint8_t>& bitmap);
     void clear();
     void setColor(const QColor &color);
     void setToolSize(int size);
@@ -36,5 +37,7 @@ private:
     QPoint point;
     QPoint firstpoint;
     QColor currentColor;
+    int convertShade(int gray);
+    void floydSteinberg(int x, int y, QImage &image, int error);
     int currentSize = 1;
 };
